@@ -25,6 +25,11 @@
 %   covADD        - additive covariance function
 %   covMask       - mask some dimensions of the data
 %
+% special purpose (wrapper) covariance functions
+%   covFITC       - to be used in conjunction with infFITC for large scale 
+%                   regression problems; any covariance can be wrapped by
+%                   covFITC such that the FITC approximation is applicable
+%
 % Naming convention: all covariance functions are named "cov/cov*.m". A trailing
 % "iso" means isotropic, "ard" means Automatic Relevance Determination, and
 % "one" means that the distance measure is parameterized by a single parameter.
@@ -35,7 +40,7 @@
 % should follow this convention if you want them to work with the function gp.
 % There are four different ways of calling the covariance functions:
 %
-% 1) With no input arguments:
+% 1) With no (or one) input argument(s):
 %
 %    s = covNAME
 %
@@ -45,27 +50,30 @@
 %
 % 2) With two input arguments:
 %
-%    K = covNAME(hyp, x) 
+%    K = covNAME(hyp, x) equivalent to K = covNAME(hyp, x, [])
 %
 % The function computes and returns the covariance matrix where hyp are
 % the hyperparameters and x is an n by D matrix of cases, where
 % D is the dimension of the input space. The returned covariance matrix is of
 % size n by n.
 %
-% 3) With three input arguments and two output arguments:
+% 3) With three input arguments:
 %
-%    [kss, Ks] = covNAME(hyp, x, xs)
+%    Ks  = covNAME(hyp, x, xs)
+%    kss = covNAME(hyp, xs, 'diag')
 %
 % The function computes test set covariances; kss is a vector of self covariances
 % for the test cases in xs (of length ns) and Ks is an (n by ns) matrix of cross
 % covariances between training cases x and test cases xs.
 %
-% 4) With three input arguments and a single output:
+% 4) With four input arguments:
 %
-%     dKi = covNAME(hyp, x, i)
+%     dKi   = covNAME(hyp, x, [], i)
+%     dKsi  = covNAME(hyp, x, xs, i)
+%     dkssi = covNAME(hyp, xs, 'diag', i)
 %
-% The function computes and returns the n by n matrix of partial derivatives
-% of the training set covariance matrix with respect to hyp(i), i.e. with
+% The function computes and returns the partial derivatives of the
+% covariance matrices with respect to hyp(i), i.e. with
 % respect to the hyperparameter number i.
 %
 % Covariance functions can be specified in two ways: either as a string
@@ -87,6 +95,7 @@
 %   q=1; cov = {'covPPiso',q};
 %   d=3; cov = {'covPoly',d};
 %        cov = {'covADD',{[1,2],'covSEiso'}};
+%        cov = {@covFITC, {@covSEiso}, u};  where u are the inducing inputs
 %
 % specifies a covariance function which is the sum of three contributions. To 
 % find out how many hyperparameters this covariance function requires, we do:
@@ -98,4 +107,4 @@
 %
 % See also doc/usageCov.m.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18

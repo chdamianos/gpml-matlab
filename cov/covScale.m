@@ -1,4 +1,4 @@
-function [A, B] = covScale(cov, hyp, x, z)
+function K = covScale(cov, hyp, x, z, i)
 
 % meanScale - compose a mean function as a scaled version of another one.
 %
@@ -11,25 +11,24 @@ function [A, B] = covScale(cov, hyp, x, z)
 % This function doesn't actually compute very much on its own, it merely does
 % some bookkeeping, and calls other mean function to do the actual work.
 %
-% Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2010-07-15.
+% Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2010-09-10.
 %
 % See also MEANFUNCTIONS.M.
 
 if nargin<3                                        % report number of parameters
-  A = [feval(cov{:}),'+1']; return
+  K = [feval(cov{:}),'+1']; return
 end
+if nargin<4, z = []; end                                   % make sure, z exists
 
 [n,D] = size(x);
 sf2 = exp(2*hyp(1));                                           % signal variance
 
-if nargin==3
-  A = sf2*feval(cov{:},hyp(2:end),x);
-elseif nargout==2                                 % compute test set covariances
-  [A, B] = feval(cov{:},hyp(2:end),x,z); A = sf2*A; B = sf2*B;
-else                                                 % compute derivative vector
-  if z==1
-    A = 2*sf2*feval(cov{:},hyp(2:end),x);
+if nargin<5                                                        % covariances
+  K = sf2*feval(cov{:},hyp(2:end),x,z);
+else                                                               % derivatives
+  if i==1
+    K = 2*sf2*feval(cov{:},hyp(2:end),x,z);
   else
-    A = sf2*feval(cov{:},hyp(2:end),x,z-1);
+    K = sf2*feval(cov{:},hyp(2:end),x,z,i-1);
   end
 end

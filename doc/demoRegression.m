@@ -110,4 +110,30 @@ xlabel('input, x')
 ylabel('output, y')
 axis([-1.9 1.9 -0.9 3.9])
 %print -depsc f3.eps
+disp(' '); disp('Hit any key to continue...'); pause
+
+disp('large scale regression using the FITC approximation')
+disp('nu = fix(n/2); u = linspace(-1.3,1.3,nu)'';')
+nu = fix(n/2); u = linspace(-1.3,1.3,nu)';
+disp('covfuncF = {@covFITC, {covfunc}, u};')
+covfuncF = {@covFITC, {covfunc}, u};
+disp('[mF s2F] = gp(hyp, @infFITC, meanfunc, covfuncF, likfunc, x, y, z);')
+[mF s2F] = gp(hyp, @infFITC, meanfunc, covfuncF, likfunc, x, y, z);
+
+figure(5)
+set(gca, 'FontSize', 24)
+disp(' ');
+disp('f = [mF+2*sqrt(s2F); flipdim(mF-2*sqrt(s2F),1)];');
+f = [mF+2*sqrt(s2F); flipdim(mF-2*sqrt(s2F),1)];
+disp('fill([z; flipdim(z,1)], f, [7 7 7]/8)');
+fill([z; flipdim(z,1)], f, [7 7 7]/8)
+disp('hold on; plot(z, mF); plot(x, y, ''+'');');
+hold on; plot(z, mF, 'LineWidth', 2); plot(x, y, '+', 'MarkerSize', 12)
+disp('plot(u,1,''o'')')
+plot(u,1,'ko', 'MarkerSize', 12)
+grid on
+xlabel('input, x')
+ylabel('output, y')
+axis([-1.9 1.9 -0.9 3.9])
+print -depsc f4.eps
 disp(' ');

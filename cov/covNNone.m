@@ -1,4 +1,4 @@
-function [A, B] = covNNone(hyp, x, z)
+function K = covNNone(hyp, x, z, i)
 
 % Neural network covariance function with a single parameter for the distance
 % measure. The covariance function is parameterized as:
@@ -12,33 +12,50 @@ function [A, B] = covNNone(hyp, x, z)
 % hyp = [ log(ell)
 %         log(sqrt(sf2) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2009-12-18.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = '2'; return; end                  % report number of parameters
-            
-n = size(x,1);
-ell = exp(hyp(1)); em2 = ell^(-2);
-sf2 = exp(2*hyp(2));
-x = x/ell;
+if nargin<2, K = '2'; return; end                  % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
-if nargin==2                                                % compute covariance
-  Q = x*x';
-  K = (em2+Q)./(sqrt(1+em2+diag(Q))*sqrt(1+em2+diag(Q)'));
-  A = sf2*asin(K);                 
-elseif nargout==2                                 % compute test set covariances
-  z = z/ell; 
-  A = sf2*asin((em2+sum(z.*z,2))./(1+em2+sum(z.*z,2)));
-  B = sf2*asin((em2+x*z')./sqrt((1+em2+sum(x.*x,2))*(1+em2+sum(z.*z,2)')));
-else                                                 % compute derivative matrix
-  Q = x*x';
-  K = (em2+Q)./(sqrt(1+em2+diag(Q))*sqrt(1+em2+diag(Q)'));
-  if z==1                                                      % first parameter
-    v = (em2+sum(x.*x,2))./(1+em2+diag(Q));
-    A = -2*sf2*((em2+Q)./(sqrt(1+em2+diag(Q))*sqrt(1+em2+diag(Q)'))- ...
-                            K.*(repmat(v,1,n)+repmat(v',n,1))/2)./sqrt(1-K.^2);
-  else                                                        % second parameter
-    A = 2*sf2*asin(K);
+n = size(x,1);
+ell2 = exp(2*hyp(1));
+sf2 = exp(2*hyp(2));
+
+sx = 1 + sum(x.*x,2);
+if dg                                                               % vector kxx
+  K = sx./(sx+ell2);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    S = 1 + x*x';
+    K = S./(sqrt(ell2+sx)*sqrt(ell2+sx)');
+  else                                                   % cross covariances Kxz
+    S = 1 + x*z'; sz = 1 + sum(z.*z,2);
+    K = S./(sqrt(ell2+sx)*sqrt(ell2+sz)');
+  end
+end
+
+if nargin<4                                                        % covariances
+  K = sf2*asin(K);
+else                                                               % derivatives
+  if i==1                                                          % lengthscale
+    if dg
+      V = K;
+    else
+      vx = sx./(ell2+sx);
+      if xeqz
+        V = repmat(vx/2,1,n) + repmat(vx'/2,n,1);
+      else  
+        vz = sz./(ell2+sz); nz = size(z,1);
+        V = repmat(vx/2,1,nz) + repmat(vz'/2,n,1);
+      end
+    end
+    K = -2*sf2*(K-K.*V)./sqrt(1-K.*K);
+  elseif i==2                                                        % magnitude
+    K = 2*sf2*asin(K);
+  else
+    error('Unknown hyperparameter')
   end
 end

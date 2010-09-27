@@ -10,16 +10,16 @@
 % the C code has been properly compiled and is avaiable, it automatically
 % takes precendence over the matlab code in this file.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-01-09.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-09-18.
 
-function x = solve_chol(A, B)
+function X = solve_chol(L, B)
 
 if nargin ~= 2 || nargout > 1
   error('Wrong number of arguments.');
 end
 
-if size(A,1) ~= size(A,2) || size(A,1) ~= size(B,1)
+if size(L,1) ~= size(L,2) || size(L,1) ~= size(B,1)
   error('Wrong sizes of matrix arguments.');
 end
 
-x = A\(A'\B);
+X = L\(L'\B);

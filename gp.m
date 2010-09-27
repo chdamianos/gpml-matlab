@@ -9,8 +9,8 @@ function [varargout] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys)
 %
 % Two modes are possible: training or prediction: if no test cases are
 % supplied, then the negative log marginal likelihood and its partial
-% derivatives w.r.t. the hyperparameters is computed; this mode is used to fit the
-% hyperparameters. If test cases are given, then the test set predictive
+% derivatives w.r.t. the hyperparameters is computed; this mode is used to fit
+% the hyperparameters. If test cases are given, then the test set predictive
 % probabilities are returned. Usage:
 %
 %   training: [nlZ dnlZ          ] = gp(hyp, inf, mean, cov, lik, x, y);
@@ -43,7 +43,7 @@ function [varargout] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys)
 % 
 % See also covFunctions.m, infMethods.m, likFunctions.m, meanFunctions.m.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18
 if nargin<7 || nargin>9
   disp('Usage: [nlZ dnlZ          ] = gp(hyp, inf, mean, cov, lik, x, y);')
   disp('   or: [ymu ys2 fmu fs2   ] = gp(hyp, inf, mean, cov, lik, x, y, xs);')
@@ -59,11 +59,13 @@ if isempty(mean), mean = {@meanZero}; end                     % set default mean
 if ischar(mean) || isa(mean, 'function_handle'), mean = {mean}; end  % make cell
 if isempty(cov), error('Covariance function cannot be empty'); end  % no default
 if ischar(cov)  || isa(cov,  'function_handle'), cov  = {cov};  end  % make cell
+cov1 = cov{1}; if isa(cov1, 'function_handle'), cov1 = func2str(cov1); end
+if strcmp(cov1,'covFITC'); inf = @infFITC; end       % only one possible inf alg
 if isempty(lik),  lik = @likGauss; else                        % set default lik
   if iscell(lik), lik = lik{1}; end                      % cell input is allowed
   if ischar(lik), lik = str2func(lik); end        % convert into function handle
 end
-[n D] = size(x);
+D = size(x,2);
 
 if ~isfield(hyp,'mean'), hyp.mean = []; end        % check the hyp specification
 if eval(feval(mean{:})) ~= numel(hyp.mean)
@@ -97,8 +99,9 @@ try                                                  % call the inference method
     end
   end
 catch
-  if nargin > 7, error('Inference method failed'); else 
-    warning('Inference method failed .. attempting to continue') % when training
+  msgstr = lasterr;
+  if nargin > 7, error('Inference method failed [%s]', msgstr); else 
+    warning('Inference method failed [%s] .. attempting to continue',msgstr)
     dnlZ = struct('cov',0*hyp.cov, 'mean',0*hyp.mean, 'lik',0*hyp.lik);
     varargout = {NaN, dnlZ}; return                    % continue with a warning
   end
@@ -112,7 +115,7 @@ else
     nz = alpha ~= 0;                                 % determine nonzero indices
     if issparse(L), L = full(L(nz,nz)); end      % convert L and sW if necessary
     if issparse(sW), sW = full(sW(nz)); end
-  else nz = true(n,1); end                           % non-sparse representation
+  else nz = true(size(alpha)); end                   % non-sparse representation
   if numel(L)==0                      % in case L is not provided, we compute it
     K = feval(cov{:}, hyp.cov, x(nz,:));
     L = chol(eye(sum(nz))+sW*sW'.*K);
@@ -124,7 +127,8 @@ else
   ymu = zeros(ns,1); ys2 = ymu; fmu = ymu; fs2 = ymu; lp = ymu;   % allocate mem
   while nact<ns               % process minibatches of test cases to save memory
     id = (nact+1):min(nact+nperbatch,ns);               % data points to process
-    [kss, Ks] = feval(cov{:}, hyp.cov, x(nz,:), xs(id,:));
+    kss = feval(cov{:}, hyp.cov, xs(id,:), 'diag');              % self-variance
+    Ks  = feval(cov{:}, hyp.cov, x(nz,:), xs(id,:));         % cross-covariances
     ms = feval(mean{:}, hyp.mean, xs(id,:));
     fmu(id) = ms + Ks'*full(alpha(nz));                       % predictive means
     if Ltril           % L is triangular => use Cholesky parameters (alpha,sW,L)

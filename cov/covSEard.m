@@ -1,4 +1,4 @@
-function [A, B] = covSEard(hyp, x, z)
+function K = covSEard(hyp, x, z, i)
 
 % Squared Exponential covariance function with Automatic Relevance Detemination
 % (ARD) distance measure. The covariance function is parameterized as:
@@ -15,27 +15,44 @@ function [A, B] = covSEard(hyp, x, z)
 %         log(ell_D)
 %         log(sqrt(sf2)) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2009-12-18.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = '(D+1)'; return; end              % report number of parameters
+if nargin<2, K = '(D+1)'; return; end              % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 [n,D] = size(x);
 ell = exp(hyp(1:D));                               % characteristic length scale
 sf2 = exp(2*hyp(D+1));                                         % signal variance
 
-if nargin == 2
-  K = sf2*exp(-sq_dist(diag(1./ell)*x')/2);
-  A = K;                 
-elseif nargout == 2                               % compute test set covariances
-  A = sf2*ones(size(z,1),1);
-  B = sf2*exp(-sq_dist(diag(1./ell)*x',diag(1./ell)*z')/2);
-else                                                 % compute derivative matrix
-  K = sf2*exp(-sq_dist(diag(1./ell)*x')/2);  
-  if z <= D                                            % length scale parameters
-    A = K.*sq_dist(x(:,z)'/ell(z));  
-  else                                                     % magnitude parameter
-    A = 2*K;
+% precompute squared distances
+if dg                                                               % vector kxx
+  K = zeros(size(x,1),1);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    K = sq_dist(diag(1./ell)*x');
+  else                                                   % cross covariances Kxz
+    K = sq_dist(diag(1./ell)*x',diag(1./ell)*z');
+  end
+end
+
+K = sf2*exp(-K/2);                                                  % covariance
+if nargin>3                                                        % derivatives
+  if i<=D                                              % length scale parameters
+    if dg
+      K = K*0;
+    else
+      if xeqz
+        K = K.*sq_dist(x(:,i)'/ell(i));
+      else
+        K = K.*sq_dist(x(:,i)'/ell(i),z(:,i)'/ell(i));
+      end
+    end
+  elseif i==D+1                                            % magnitude parameter
+    K = 2*K;
+  else
+    error('Unknown hyperparameter')
   end
 end

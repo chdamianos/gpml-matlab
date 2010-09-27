@@ -1,4 +1,4 @@
-function [A, B] = covNoise(hyp, x, z)
+function K = covNoise(hyp, x, z, i)
 
 % Independent covariance function, ie "white noise", with specified variance.
 % The covariance function is specified as:
@@ -10,20 +10,36 @@ function [A, B] = covNoise(hyp, x, z)
 %
 % hyp = [ log(sqrt(s2)) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2009-12-17.
+% For more help on design of covariance functions, try "help covFunctions".
+%
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = '1'; return; end             % report number of hyperparameters
+if nargin<2, K = '1'; return; end                  % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 n = size(x,1);
 s2 = exp(2*hyp);                                                % noise variance
 
-if nargin==2                                         % compute covariance matrix
-  A = s2*eye(n);
-elseif nargout==2                                 % compute test set covariances
-  A = s2*ones(size(z,1),1);
-  B = zeros(n,size(z,1));               % zeros cross covariance by independence
-else                                                 % compute derivative matrix
-  A = 2*s2*eye(n);
+% precompute raw
+if dg                                                               % vector kxx
+  K = ones(n,1);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    K = eye(n);
+  else                                                   % cross covariances Kxz
+    K = zeros(n,size(z,1));
+  end
+end
+
+if nargin<4                                                        % covariances
+  K = s2*K;
+else                                                               % derivatives
+  if i==1
+    K = 2*s2*K;
+  else
+    error('Unknown hyperparameter')
+  end
 end

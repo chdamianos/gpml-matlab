@@ -9,7 +9,7 @@
 % the following script is only tested for the most common ones (Mac,Linux,Win)
 % but should work with minor modifications on your architecture.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-07-18.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-12-16.
 
 OCTAVE = exist('OCTAVE_VERSION') ~= 0;        % check if we run Matlab or Octave
 
@@ -19,19 +19,12 @@ mydir = which(me); mydir = mydir(1:end-2-numel(me)); % where am I located
 cd(mydir)
 
 if OCTAVE
-  %% 1) compile sq_dist
-  mkoctfile --mex sq_dist.c
-  delete sq_dist.o
-
-  %% 2) compile solve_chol
+  %% compile solve_chol
   mkoctfile --mex solve_chol.c
   delete solve_chol.o
 
 else % MATLAB
-  %% 1) compile sq_dist
-  mex -O sq_dist.c
-
-  %% 2) compile solve_chol
+  %% compile solve_chol
   if ispc                                                              % Windows
     libext = 'lib';
 
@@ -60,30 +53,9 @@ else % MATLAB
     % compile
     comp_cmd = 'mex -O solve_chol2XXXX.c -output solve_chol';
     eval([comp_cmd,' ''',matlabroot,'/',ospath,'/libmwlapack.',libext,''''])
+
     delete solve_chol2XXXX*
-    return
+  else                                                     % Linux, MAC, Solaris
+    mex -O -lmwlapack solve_chol.c                           
   end
-  comp_cmd = 'mex -O solve_chol.c';
-  if isunix
-    if ismac                                                               % Mac
-      libext = 'dylib';
-      if numel(strfind(lower(computer),'maci'))                          % Intel
-        ospath = 'bin/maci';
-      else
-        ospath = 'bin/mac';
-      end
-    else
-      libext = 'so';
-      if numel(strfind(lower(computer),'sol'))                         % Solaris
-        ospath = 'bin/sol64';
-      else                                                               % Linux
-        if numel(strfind(computer,'64'))
-          ospath = 'bin/glnxa64';                                       % 32 bit
-        else                                                            % 64 bit
-          ospath = 'bin/glnx86';
-        end
-      end
-    end
-  end
-  eval([comp_cmd,' ',matlabroot,'/',ospath,'/libmwlapack.',libext])
 end

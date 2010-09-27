@@ -30,11 +30,16 @@ function varargout = gpr(hyper, cov, x, y, xs)
 %
 % Copyright (c) 2010 Carl Edward Rasmussen and Hannes Nickisch 2010-06-18.
 
-err = 'we need cov = {''covSum'', {''covNoise'', .., covP} }; to map to gp.m';
+err = 'we need cov = {''covSum'', {cov1, ..,''covNoise'', .., covP} }; to map to gp.m';
 if ~strcmp(cov{1},'covSum'), error(err), end
-if ~strcmp(cov{2}{1},'covNoise'), error(err), end
-cov{2} = cov{2}(2:end);
-hyp.lik = hyper(1); hyp.cov = hyper(2:end);
+id = 0; nhyp = zeros(length(cov{2}),1);
+for i=1:length(cov{2})
+  if strcmp(cov{2}{i},'covNoise'), id = i; break, end
+  nhyp(i) = eval(feval(cov{2}{i}));
+end
+if id==0, error(err), else nhyp = sum(nhyp(1:id-1)); end
+cov{2} = cov{2}([1:id-1,id+1:end]);
+hyp.lik = hyper(nhyp+1); hyp.cov = hyper([1:nhyp,nhyp+2:end]);
 
 % Note, this function is just a wrapper provided for backward compatibility,
 % the functionality is now provided by the more general gp function.

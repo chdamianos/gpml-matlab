@@ -224,5 +224,4 @@ function y = log_expA_x(A,x)
 function y = expABz_expAx(A,x,B,z)
   N = size(A,2);  maxA = max(A,[],2);      % number of columns, max over columns
   A = A-maxA*ones(1,N);                                 % subtract maximum value
-  y = ( (exp(A).*B)*z ) ./ ( exp(A)*x );  
-  
+  y = ( (exp(A).*B)*z ) ./ ( exp(A)*x );

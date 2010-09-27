@@ -3,13 +3,13 @@
 <head>
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
   <meta name="author" content="Carl E. Rasmussen and Hannes Nickisch">
-  <meta name="description" content="User documentation of the Gaussian process for machine learning">
+  <meta name="description" content="User documentation of the Gaussian process for machine learning 3.1">
   <title>Documentation for GPML Matlab Code</title>
   <link type="text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Documentation for GPML Matlab Code</h1>
+<h1>Documentation for GPML Matlab Code version 3.1</h1>
 
 <h2>What?</h2>
 
@@ -25,17 +25,19 @@ sparse approximations. Other GP packages can be found <a
 <p>The code is written by Carl Edward Rasmussen and Hannes Nickisch; it runs on
 both <a href="http://www.octave.org">Octave</a> 3.2.x
 and <a href="http://www.mathworks.com/products/matlab/">Matlab</a>&reg; 7.x. 
-The code is based on <a href="../release/oldcode.html">previous versions</a> 
+The code is based on <a href="http://gaussianprocess.org/gpml/code/matlab/release/oldcode.html">previous versions</a> 
 written by Carl Edward Rasmussen and Chris Williams.</p>
 
 <h2>Download, Install and Documentation</h2>
 
 <p>All the code including demonstrations and html documentation can be
 downloaded in a <a
- href="../release/gpml-matlab-v3.0-2010-07-23.tar.gz">tar</a>
+ href="http://gaussianprocess.org/gpml/code/matlab/release/gpml-matlab-v3.1-2010-09-27.tar.gz">tar</a>
 or <a
- href="../release/gpml-matlab-v3.0-2010-07-23.zip">zip</a>
+ href="http://gaussianprocess.org/gpml/code/matlab/release/gpml-matlab-v3.1-2010-09-27.zip">zip</a>
 archive file.</p>
+
+<p>Minor changes and incremental bugfixes are documented in the <a href="changelog">changelog</a>. </p>
 
 <p>Please read the <a href="../Copyright">copyright</a> notice.</p>
 
@@ -145,9 +147,11 @@ need to know about:</p>
 <tr><td align="left">Likelihood &#92; Inference<br>&nbsp;</td>
 <td align="center">&nbsp;<br>GPML name</td>
 <td align="center">Exact<br><a href="../inf/infExact.m">infExact</a></td>
+<td align="center">FITC<br><a href="../inf/infFITC.m">infFITC</a></td>
 <td align="center">EP<br><a href="../inf/infEP.m">infEP</a></td>
 <td align="center">Laplace<br><a href="../inf/infLaplace.m">infLaplace</a></td>
 <td align="center">Variational Bayes<br><a href="../inf/infVB.m">infVB</a></td>
+<td align="center">LOO<br><a href="../inf/infLOO.m">infLOO</a></td>
 <td>type, output domain<br>&nbsp;</td>
 <td>alternate names<br>&nbsp;</td>
 </tr>
@@ -169,11 +173,20 @@ need to know about:</p>
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
+<td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
+ <td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
 <td align="left">regression, IR</td>
 <td>&nbsp;</td>
 </tr>
 <tr><td align="left">Sech-squared</td>
 <td align="left"><a href="../lik/likSech2.m">likSech2</a></td>
+<td align="center">&nbsp;</td>
 <td align="center">&nbsp;</td>
 <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
@@ -184,6 +197,10 @@ need to know about:</p>
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
 <td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
+ <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
@@ -192,12 +209,17 @@ need to know about:</p>
 <tr><td align="left">Laplacian</td>
 <td align="left"><a href="../lik/likLaplace.m">likLaplace</a></td>
 <td align="center">&nbsp;</td>
+<td align="center">&nbsp;</td>
 <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
 <td align="center">&nbsp;</td>
 <td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
+ <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
@@ -207,11 +229,16 @@ need to know about:</p>
 <td align="left"><a href="../lik/likT.m">likT</a></td>
 <td align="center">&nbsp;</td>
 <td align="center">&nbsp;</td>
+<td align="center">&nbsp;</td>
 <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
 <td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
+ <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
@@ -219,6 +246,7 @@ need to know about:</p>
 <td>&nbsp;</td></tr>
 <tr><td align="left">Error function</td>
 <td align="left"><a href="../lik/likErf.m">likErf</a></td>
+<td align="center">&nbsp;</td>
 <td align="center">&nbsp;</td>
 <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
@@ -229,6 +257,10 @@ need to know about:</p>
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
 <td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
+ <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
@@ -238,6 +270,7 @@ need to know about:</p>
 <tr><td align="left">Logistic function</td>
 <td align="left"><a href="../lik/likLogistic.m">likLogistic</a></td>
 <td align="center">&nbsp;</td>
+<td align="center">&nbsp;</td>
 <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
@@ -247,6 +280,10 @@ need to know about:</p>
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
 <td align="center"><span class="math"><img
+ width="18" height="14" align="bottom" border="0"
+ src="checkmark.png"
+ alt="$\checkmark$"></span></td>
+ <td align="center"><span class="math"><img
  width="18" height="14" align="bottom" border="0"
  src="checkmark.png"
  alt="$\checkmark$"></span></td>
@@ -407,7 +444,7 @@ and to generalize from the training data to other (test) inputs
 
   f = [m+2*sqrt(s2); flipdim(m-2*sqrt(s2),1)]; 
   fill([z; flipdim(z,1)], f, [7 7 7]/8)
-  hold on; plot(z, mu); plot(x, y, '+')
+  hold on; plot(z, m); plot(x, y, '+')
 </pre>
 
 <p>The <tt>gp</tt> function is called with a struct of hyperparameters
@@ -504,7 +541,7 @@ marginal likelihood.</p>
 function (although the covariance function is still different from
 that of the generating process).</p>
 
-<h4>Exercise for the reader</h4>
+<h4>Exercises for the reader</h4>
 
 <dl>
 <dt><strong>Inference Methods</strong>
@@ -519,6 +556,47 @@ explicit mean function, but further additive contributions to the
 covariance. How would you expect the marginal likelihood to compare to
 the previous case?
 </dl>
+
+<h4>Large scale regression</h4>
+
+<p>In case the number of training inputs <tt>x</tt> exceeds a few 
+thousands, exact inference using
+<a href="../inf/infExact.m">infExact.m</a> 
+takes too long. We offer the FITC approximation based on a low-rank
+plus diagonal approximation to the exact covariance to deal with these
+cases. The general idea is to use inducing points <tt>u</tt> and to
+base the computations on cross-covariances between training, test and
+inducing points only.
+</p>
+
+<p>
+Using the FITC approximation 
+is very simple, we just have to wrap the covariance function
+<tt>covfunc</tt> into <a href="../cov/covFITC.m">covFITC.m</a>
+and call <a href="../gp.m">gp.m</a> with the inference method
+<a href="../inf/infFITC.m">infFITC.m</a> as demonstrated by
+the following lines of code.
+</p>
+
+<pre>
+nu = fix(n/2); u = linspace(-1.3,1.3,nu)';
+covfuncF = {@covFITC, {covfunc}, u};
+[mF s2F] = gp(hyp, @infFITC, meanfunc, covfuncF, likfunc, x, y, z);
+</pre>
+
+<p>
+We define equispaced inducing points <tt>u</tt> that are shown in the
+figure as black circles. Note that the predictive variance is overestimated
+outside the support of the inducing inputs.
+In a multivariate example where densely sampled inducing inputs are infeasible,
+one can simply use a random subset of the training points. 
+</p>
+
+<pre>
+nu = fix(n/2); iu = randperm(n); iu = iu(1:nu); u = x(iu,:);
+</pre>
+
+<center><img src="f4.gif" alt="f4.gif"></center><br>
 
 
 <h3>Classification</h3>
@@ -647,9 +725,10 @@ is best?
 
 <p>Innumerable colleagues have helped to improve this software. Some
 of these are: John Cunningham, M&aacute;t&eacute; Lengyel, Joris Mooij, 
-Iain Murray, Ed Snelson and Chris Williams.</p>
+Iain Murray and Chris Williams. Especially Ed Snelson helped to improve
+the code and to include sparse approximations.</p>
 
 <hr>
-Last modified: July 23rd 2010
+Last modified: February 15th 2011
 </body>
 </html>

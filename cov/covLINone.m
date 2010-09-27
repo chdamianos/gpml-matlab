@@ -1,4 +1,4 @@
-function [A, B] = covLINone(hyp, x, z)
+function K = covLINone(hyp, x, z, i)
 
 % Linear covariance function with a single hyperparameter. The covariance
 % function is parameterized as:
@@ -10,19 +10,33 @@ function [A, B] = covLINone(hyp, x, z)
 %
 % hyp = [ log(sqrt(t2)) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2009-12-18.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = '1'; return; end                  % report number of parameters
+if nargin<2, K = '1'; return; end                  % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 it2 = exp(-2*hyp);                                                  % t2 inverse
 
-if nargin==2                                                % compute covariance
-  A = it2*(1+x*x');
-elseif nargout==2                                 % compute test set covariances
-  A = it2*(1+sum(z.*z,2));
-  B = it2*(1+x*z');
-else                                                 % compute derivative matrix
-  A = -2*it2*(1+x*x');
+% precompute inner products
+if dg                                                               % vector kxx
+  K = sum(x.*x,2);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    K = x*x';
+  else                                                   % cross covariances Kxz
+    K = x*z';
+  end
+end
+
+if nargin<4                                                        % covariances
+  K = it2*(1+K);
+else                                                               % derivatives
+  if i==1
+    K = -2*it2*(1+K);
+  else
+    error('Unknown hyperparameter')
+  end
 end

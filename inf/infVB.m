@@ -25,6 +25,8 @@ function [post, nlZ, dnlZ] = infVB(hyp, mean, cov, lik, x, y)
 % done using derivative-free 'Brent's minimum' search.
 %
 % Copyright (c) by Hannes Nickisch 2010-07-22.
+%
+% See also INFMETHODS.M.
 
 maxitinner = 20;                            % number of inner Newton steps in ga
 
@@ -73,7 +75,7 @@ post.alpha = alpha; post.sW = sW; post.L  = L;
 if nargout>2                                           % do we want derivatives?
   dnlZ = hyp;                                   % allocate space for derivatives
   for j=1:length(hyp.cov)                                    % covariance hypers
-    dK = feval(cov{:}, hyp.cov, x, j);
+    dK = feval(cov{:}, hyp.cov, x, [], j);
     if j==1, v = iKtil*(b./W); end
     dnlZ.cov(j) = sum(sum(iKtil.*dK))/2 - (v'*dK*v)/2; % implicit derivative = 0
   end

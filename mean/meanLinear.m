@@ -20,7 +20,11 @@ if nargin<2, A = 'D'; return; end             % report number of hyperparameters
 if any(size(hyp)~=[D,1]), error('Exactly D hyperparameters needed.'), end
 a = hyp;
 if nargin==2
-    A = x*a;                                                     % evaluate mean
+  A = x*a;                                                       % evaluate mean
 else
+  if i<=D
     A = x(:,i);                                                     % derivative
+  else
+    A = zeros(n,1);
+  end
 end

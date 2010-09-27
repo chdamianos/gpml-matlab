@@ -2,7 +2,7 @@ function [varargout] = likLaplace(hyp, y, mu, s2, inf, i)
 
 % likLaplace - Laplacian likelihood function for regression. 
 % The expression for the likelihood is 
-%   likLaplace(t) = exp(-|t-y|/b)/2*b with b = sn/sqrt(2),
+%   likLaplace(t) = exp(-|t-y|/b)/(2*b) with b = sn/sqrt(2),
 % where y is the mean and sn^2 is the variance.
 %
 % The hyperparameters are:
@@ -67,9 +67,8 @@ else                                                            % inference mode
     idlik = fac*sn<sqrt(s2);                        % Likelihood is a delta peak
     idgau = fac*sqrt(s2)<sn;                          % Gaussian is a delta peak
     id = ~idgau & ~idlik;                          % interesting case in between
-    id = id|true;
     if nargin<6                                             % no derivative mode
-      lZ = zeros(n,1); dlZ = lZ; d2lZ = lZ;                    % allocate memory      
+      lZ = zeros(n,1); dlZ = lZ; d2lZ = lZ;                    % allocate memory
       if any(idlik)
         [lZ(idlik),dlZ(idlik),d2lZ(idlik)] = ...
                                 likGauss(log(s2(idlik))/2, mu(idlik), y(idlik));

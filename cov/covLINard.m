@@ -1,4 +1,4 @@
-function [A, B] = covLINard(hyp, x, z)
+function K = covLINard(hyp, x, z, i)
 
 % Linear covariance function with Automatic Relevance Determination (ARD). The
 % covariance function is parameterized as:
@@ -15,21 +15,42 @@ function [A, B] = covLINard(hyp, x, z)
 %
 % Note that there is no bias term; use covConst to add a bias.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2009-12-18.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = 'D'; return; end                  % report number of parameters
+if nargin<2, K = 'D'; return; end                  % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 ell = exp(hyp);
+[n,D] = size(x);
 x = x*diag(1./ell);
 
-if nargin==2
-  A = x*x';
-elseif nargout==2                                 % compute test set covariances
-  z = z*diag(1./ell);
-  A = sum(z.*z,2);
-  B = x*z';
-else                                               % compute derivative matrices
-  A = -2*x(:,z)*x(:,z)';
+% precompute inner products
+if dg                                                               % vector kxx
+  K = sum(x.*x,2);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    K = x*x';
+  else                                                   % cross covariances Kxz
+    z = z*diag(1./ell);
+    K = x*z';
+  end
+end
+
+if nargin>3                                                        % derivatives
+  if i<=D
+    if dg
+      K = -2*x(:,i).*x(:,i);
+    else
+      if xeqz
+        K = -2*x(:,i)*x(:,i)';
+      else
+        K = -2*x(:,i)*z(:,i)';
+      end
+    end
+  else
+    error('Unknown hyperparameter')
+  end
 end

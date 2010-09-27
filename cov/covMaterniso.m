@@ -1,4 +1,4 @@
-function [A, B] = covMaterniso(d, hyp, x, z)
+function K = covMaterniso(d, hyp, x, z, i)
 
 % Matern covariance function with nu = d/2 and isotropic distance measure. For
 % d=1 the function is also known as the exponential covariance function or the 
@@ -13,34 +13,44 @@ function [A, B] = covMaterniso(d, hyp, x, z)
 % hyp = [ log(ell)
 %         log(sqrt(sf2)) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-01-12.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<3, A = '2'; return; end                  % report number of parameters
+if nargin<3, K = '2'; return; end                  % report number of parameters
+if nargin<4, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 ell = exp(hyp(1));
 sf2 = exp(2*hyp(2));
-if all(d~=[1,3,5]), error('only 1, 3 and 5 allowed for d'), end  % degree
-
-x = sqrt(d)*x/ell;
+if all(d~=[1,3,5]), error('only 1, 3 and 5 allowed for d'), end         % degree
 
 switch d
   case 1, f = @(t) 1;               df = @(t) 1;
   case 3, f = @(t) 1 + t;           df = @(t) t;
   case 5, f = @(t) 1 + t.*(1+t/3);  df = @(t) t.*(1+t)/3;
 end
-          k = @(t,f) f(t).*exp(-t); dk = @(t,f) df(t).*t.*exp(-t);
+          m = @(t,f) f(t).*exp(-t); dm = @(t,f) df(t).*t.*exp(-t);
 
-if nargin==3                                         % compute covariance matrix
-  A = sf2*k( sqrt(sq_dist(x')), f );
-elseif nargout==2                                 % compute test set covariances
-  A = sf2*ones(size(z,1),1);
-  B = sf2*k( sqrt(sq_dist(x',sqrt(d)*z'/ell)), f );
-else                                               % compute derivative matrices
-  if z==1
-    A =   sf2*dk( sqrt(sq_dist(x')), f );
+% precompute distances
+if dg                                                               % vector kxx
+  K = zeros(size(x,1),1);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    K = sqrt( sq_dist(sqrt(d)*x'/ell) );
+  else                                                   % cross covariances Kxz
+    K = sqrt( sq_dist(sqrt(d)*x'/ell,sqrt(d)*z'/ell) );
+  end
+end
+
+if nargin<5                                                        % covariances
+  K = sf2*m(K,f);
+else                                                               % derivatives
+  if i==1
+    K = sf2*dm(K,f);
+  elseif i==2
+    K = 2*sf2*m(K,f);
   else
-    A = 2*sf2* k( sqrt(sq_dist(x')), f );
+    error('Unknown hyperparameter')
   end
 end

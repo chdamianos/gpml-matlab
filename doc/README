@@ -1,7 +1,7 @@
- GAUSSIAN PROCESS REGRESSION AND CLASSIFICATION Toolbox version 3.0
+ GAUSSIAN PROCESS REGRESSION AND CLASSIFICATION Toolbox version 3.1
     for GNU Octave 3.2.x and Matlab 7.x
 
-Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23.
+Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-27.
 
 
 
@@ -16,12 +16,14 @@ and jump right to the examples in doc/index.html.
 1) ABOUT THESE PROGRAMS
 =======================
 
-This collection of matlab programs implement and demonstrates some of the
+This collection of matlab programs implements and demonstrates some of the
 algorithms described in 
 a) the book by Rasmussen and Williams: "Gaussian Processes for Machine Learning", 
-the MIT Press 2006 and in
+the MIT Press 2006, in
 b) the article by Nickisch and Rasmussen: "Approximations for Binary Gaussian
-Process Classification", JMLR 2010.
+Process Classification", JMLR 2008 and in
+c) the article by Candela and Rasmussen: "A Unifying View of Sparse Approximate
+Gaussian Process Regression", JMLR 2005.
 
 There are 6 code subdirectories: cov, doc, inf, lik, mean and util.
 
@@ -64,9 +66,9 @@ want to consult [2].
 
 Two components of the toolbox can be accelerated by MEX. 
 
-First, there are some auxiliary functions (currently sq_dist.m and solve_chol.m)
-having a MEX equivalent. These can be compiled by either executing util/make.m 
-from the Matlab/Octave command line. In addition to that, we provide a Makefile
+First, there is an auxiliary functions solve_chol.m having a MEX equivalent. 
+This can be compiled by either executing util/make.m from the Matlab/Octave 
+command line. In addition to that, we provide a Makefile
 for Matlab in util/ that you can run by simply typing make in your shell after
 having supplied your Matlab path and your operating system. 
 We recommend the make.m script because it works both under Matlab and Octave.
@@ -74,8 +76,13 @@ We recommend the make.m script because it works both under Matlab and Octave.
 Second, in order to use the L-BFGS minimiser for hyperparameter optimisation as
 an equivalent to minimize.m, you have to compile Peter Carbonetto's 
 "Matlab interface for L-BFGS-B" [1]. The challenge here is the Fortran 77 code.
-We provide a Makefile suitable for Linux 32/64 bit and Mac whenever you have g77
-properly installed. 
+We provide a Makefile suitable for Linux 32/64 bit and Mac whenever you have 
+1) g77 
+or 
+2) gfortran
+properly set up.
+Under Ubuntu, you can achieve this by installing the packages fort77 and 
+gfortran, respectively.
 
 Compilation is done by editing util/lbfgsb/Makefile. In any case, you need to 
 provide $MATLAB_HOME which can be found by the commands 'locate matlab' or 
@@ -86,12 +93,12 @@ a) using the mex utility by Matlab                                     [default]
 b) without mex utility by Matlab
   provide $MEX_SUFFIX and $MATLAB_LIB, then type 'make nomex'
 
-In Ubuntu 10.04 LTS, the libg2c library needed for both a) and b) is not 
+In Ubuntu 10.04 LTS, the libg2c library needed for both 1)+a) and 1)+b) is not 
 included per default. If 'ls /usr/lib/libg2c.*' does not list anything 
 this is the case on your machine. You then whant to install the packages 
 gcc-3.4-base and libg2c0 e.g. from
-http://packages.ubuntu.com/jaunty/gcc-3.4-base and
-http://packages.ubuntu.com/jaunty/libg2c0.
+http://packages.ubuntu.com/hardy/gcc-3.4-base and
+http://packages.ubuntu.com/hardy/libg2c0.
 After installation, you have to create a symbolic link by 'cd /usr/lib' and 
 'ln -s libg2c.so.0 libg2c.so'.
 
@@ -104,12 +111,18 @@ After installation, you have to create a symbolic link by 'cd /usr/lib' and
 ==================
 
 The current version of the programs is 3.0. Previous versions of the code are
-avaiable at http://www.gaussianprocess.org/gpml/code/oldcode.html.
+available at http://www.gaussianprocess.org/gpml/code/oldcode.html.
 
 
 
 4) DIFFERENCES TO PREVIOUS VERSIONS
 ===================================
+
+NEW in version 3.1, 2010-10-10
+------------------------------
+- following a suggestion by Ed Snelson we now support FITC regression
+- cov/covFITC.m and inf/infFITC.m have been added with Ed Snelson's help
+- the covariance interface was slightly changed to make that possible
 
 NEW in version 3.0, 2010-07-23
 ------------------------------

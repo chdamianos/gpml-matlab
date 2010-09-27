@@ -73,7 +73,7 @@
 %
 % c1) [h,b,dh,db,d2h,d2b] = lik(hyp, y, [], ga, 'infVB')
 % ga is the variance of a Gaussian lower bound to the likelihood p(y|f).
-%   p(y|f) \ge exp( b*s - s.^2/(2*ga) - h(ga)/2 ) \propto N(f|b*ga,ga)
+%   p(y|f) \ge exp( b*f - f.^2/(2*ga) - h(ga)/2 ) \propto N(f|b*ga,ga)
 % The function returns the linear part b and the "scaling function" h(ga) and
 % derivatives dh = d h/dga, db = d b/dga, d2h = d^2 h/dga and d2b = d^2 b/dga.
 %
@@ -86,4 +86,4 @@
 % See the help for the individual likelihood for the computations specific to
 % each likelihood function.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18

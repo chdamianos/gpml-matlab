@@ -15,7 +15,7 @@ function [varargout] = likGauss(hyp, y, mu, s2, inf, i)
 %
 % See also likFunctions.m.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18
 
 if nargin<2, varargout = {'1'}; return; end   % report number of hyperparameters
 
@@ -65,14 +65,14 @@ else
       lZ = -(y-mu).^2./(sn2+s2)/2 - log(2*pi*(sn2+s2))/2;    % log part function
       dlZ = {}; d2lZ = {};
       if nargout>1
-        dlZ  = (y-mu)./(sn2+s2);                       % 1st derivative w.r.t. mean
+        dlZ  = (y-mu)./(sn2+s2);                    % 1st derivative w.r.t. mean
         if nargout>2
-          d2lZ = -1./(sn2+s2);                         % 2nd derivative w.r.t. mean
+          d2lZ = -1./(sn2+s2);                      % 2nd derivative w.r.t. mean
         end
       end
       varargout = {lZ,dlZ,d2lZ};
     else                                                       % derivative mode
-      dlZhyp = ((y-mu).^2./(sn2+s2)-1) ./ (1+s2./sn2);      % deriv. w.r.t. hyp.lik
+      dlZhyp = ((y-mu).^2./(sn2+s2)-1) ./ (1+s2./sn2);   % deriv. w.r.t. hyp.lik
       varargout = {dlZhyp};
     end
 
@@ -94,7 +94,7 @@ else
       ga = s2; n = numel(ga); 
       dhhyp = zeros(n,1); dhhyp(ga(:)<=sn2) = 2;
       dhhyp(ga<0) = 0;              % negative variances get a special treatment
-      varargout = {dhhyp};                                  % deriv. w.r.t. hyp.lik
+      varargout = {dhhyp};                               % deriv. w.r.t. hyp.lik
     end
   end
 end

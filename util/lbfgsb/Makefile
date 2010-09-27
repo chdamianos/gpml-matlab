@@ -6,30 +6,35 @@ MATLAB_HOME=/agbs/share/sw/matlab
 # for 'make mex'   you need to provide the variable  MEX and have mex set up
 # for 'make nomex' you need to provide the variables MEX_SUFFIX and MATLAB_LIB
 
-# 32 bit Linux
+# Choose Operating System ######################################################
+# For 32 bit Linux, uncomment the following three lines.------------------------
 MEX        = $(MATLAB_HOME)/bin/mex
 MEX_SUFFIX = mexglx
 MATLAB_LIB = -L$(MATLAB_HOME)/bin/glnx86 -lmex
-
-# 64 bit Linux
+# For 64 bit Linux, uncomment the following three lines.------------------------
 #MEX        = $(MATLAB_HOME)/bin/mex
 #MEX_SUFFIX = mexa64
 #MATLAB_LIB = -L$(MATLAB_HOME)/bin/glnxa64 -lmex
-
-# Mac OS X
+# For Mac OS X, uncomment the following three lines.----------------------------
 #MEX        = /Applications/MATLAB7/bin/mex
 #MEX_SUFFIX = mexmac
 #MATLAB_LIB = -L$(MATLAB_HOME)/bin/maci -lmex
 
 
+# Choose FORTRAN compiler ######################################################
+# To work with f77, uncomment the following two lines.--------------------------
+F77         = f77
+FORTRAN_LIB = g2c
+# To use gfortran, uncomment the following two lines.---------------------------
+#F77         = gfortran
+#FORTRAN_LIB = gfortran
+
 
 # Do not edit below ############################################################
 CXX    = g++
-F77    = f77
 CFLAGS = -O3 -ffast-math -fomit-frame-pointer -fPIC -Werror -pthread -Wall -ansi
 FFLAGS = -O3 -fPIC -fexceptions
 
-FORTRAN_LIB=g2c
 MATLAB_INCLUDE=-I$(MATLAB_HOME)/extern/include
 TARGET = lbfgsb
 OBJS   = solver.o matlabexception.o matlabscalar.o matlabstring.o \

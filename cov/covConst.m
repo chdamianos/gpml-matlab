@@ -1,4 +1,4 @@
-function [A, B] = covConst(hyp, x, z)
+function K = covConst(hyp, x, z, i)
 
 % covariance function for a constant function. The covariance function is
 % parameterized as:
@@ -9,22 +9,31 @@ function [A, B] = covConst(hyp, x, z)
 %
 % hyp = [ log(sqrt(s2)) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-01-21.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = '1'; return; end                  % report number of parameters
+if nargin<2, K = '1'; return; end                  % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 s2 = exp(2*hyp);                                                            % s2
 n = size(x,1);
 
-if nargin==2
-  A = s2*ones(n,n);
-elseif nargout==2 && nargin==3                    % compute test set covariances
-  ns = size(z,1);
-  A = s2*ones(ns,1);
-  B = s2*ones(n,ns);
-else                                                 % compute derivative matrix
-  A = 2*s2*ones(n,n);
+if dg                                                               % vector kxx
+  K = s2*ones(n,1);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    K = s2*ones(n);
+  else                                                   % cross covariances Kxz
+    K = s2*ones(n,size(z,1));
+  end
 end
 
+if nargin>3                                                        % derivatives
+  if i==1
+    K = 2*K;
+  else
+    error('Unknown hyperparameter')
+  end
+end

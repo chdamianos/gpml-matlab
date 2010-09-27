@@ -4,7 +4,9 @@ function [post nlZ dnlZ] = infExact(hyp, mean, cov, lik, x, y)
 % of the posterior, the negative log marginal likelihood and its derivatives
 % w.r.t. the hyperparameters. See also "help infMethods".
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18
+%
+% See also INFMETHODS.M.
 
 likstr = lik; if ~ischar(lik), likstr = func2str(lik); end 
 if ~strcmp(likstr,'likGauss')               % NOTE: no explicit call to likGauss
@@ -23,14 +25,13 @@ post.alpha = alpha;                            % return the posterior parameters
 post.sW = ones(n,1)/sqrt(sn2);                  % sqrt of noise precision vector
 post.L  = L;                                        % L = chol(eye(n)+sW*sW'.*K)
 
-if nargout>1                                % do we want the marginal likelihood
+if nargout>1                               % do we want the marginal likelihood?
   nlZ = (y-m)'*alpha/2 + sum(log(diag(L))) + n*log(2*pi*sn2)/2;  % -log marg lik
   if nargout>2                                         % do we want derivatives?
     dnlZ = hyp;                                 % allocate space for derivatives
-
-    Q = L\(L'\eye(n))/sn2 - alpha*alpha';           % precompute for convenience
+    Q = solve_chol(L,eye(n))/sn2 - alpha*alpha';    % precompute for convenience
     for i = 1:numel(hyp.cov)
-      dnlZ.cov(i) = sum(sum(Q.*feval(cov{:}, hyp.cov, x, i)))/2;
+      dnlZ.cov(i) = sum(sum(Q.*feval(cov{:}, hyp.cov, x, [], i)))/2;
     end
     dnlZ.lik = sn2*trace(Q);
     for i = 1:numel(hyp.mean), 

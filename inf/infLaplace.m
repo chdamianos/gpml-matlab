@@ -6,6 +6,8 @@ function [post nlZ dnlZ] = infLaplace(hyp, mean, cov, lik, x, y)
 % gp.m. See also infFunctions.m.
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-02-23.
+%
+% See also INFMETHODS.M.
 
 persistent last_alpha                                   % copy of the last alpha
 tol = 1e-6;                   % tolerance for when to stop the Newton iterations
@@ -79,7 +81,7 @@ if nargout>2                                           % do we want derivatives?
   end
   dfhat = g.*d3lp;  % deriv. of nlZ wrt. fhat: dfhat=diag(inv(inv(K)+W)).*d3lp/2
   for j=1:length(hyp.cov)                                    % covariance hypers
-    dK = feval(cov{:}, hyp.cov, x, j);
+    dK = feval(cov{:}, hyp.cov, x, [], j);
     dnlZ.cov(j) = sum(sum(Z.*dK))/2 - alpha'*dK*alpha/2;         % explicit part
     b = dK*dlp;                        % b-K*(Z*b) = inv(eye(n)+K*diag(W))*b
     dnlZ.cov(j) = dnlZ.cov(j) - dfhat'*( b-K*(Z*b) );            % implicit part
@@ -104,7 +106,7 @@ function [Psi,alpha,f,dlp,W] = Psi_line(s,dalpha,alpha,hyp,K,m,lik,y,inf)
   Psi = alpha'*(f-m)/2 - lp;
 
 
-% Compute the log determinant ldA and the inverse iA of a square nxn matrix 
+% Compute the log determinant ldA and the inverse iA of a square nxn matrix
 % A = eye(n) + K*diag(w) from its LU decomposition; for negative definite A, we 
 % return ldA = Inf. We also return mwiA = -diag(w)*inv(A).
 function [ldA,iA,mwiA] = logdetA(K,w)
@@ -112,7 +114,7 @@ function [ldA,iA,mwiA] = logdetA(K,w)
   A = eye(n)+K.*repmat(w',n,1);
   [L,U,P] = lu(A); u = diag(U);           % compute LU decomposition, A = P'*L*U
   signU = prod(sign(u));                                             % sign of U
-  detP = 1;                 % compute sign (and det) of the premutation matrix P
+  detP = 1;                 % compute sign (and det) of the permutation matrix P
   p = P*(1:n)';
   for i=1:n
     if i~=p(i)

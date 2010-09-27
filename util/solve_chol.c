@@ -1,18 +1,18 @@
 /* solve_chol - solve a linear system A*X = B using the cholesky factorization
    of A (where A is square, symmetric and positive definite.
 
-   Copyright (c) 2004 Carl Edward Rasmussen. 2004-10-19. */
+   Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-12-16. */
 
 #include "mex.h"
 #include <math.h>
 #include <string.h>
 
-extern int dpotrs_(char *, int *, int *, double *, int *, double *, int *, int *);
+extern int dpotrs_(char *, long *, long *, double *, long *, double *, long *, long *);
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
   double *C;
-  int n, m, q;
+  long n, m, q;
 
   if (nrhs != 2 || nlhs > 1)                              /* check the input */
     mexErrMsgTxt("Usage: X = solve_chol(R, B)");

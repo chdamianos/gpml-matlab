@@ -6,7 +6,7 @@ function A = meanProd(mean, hyp, x, i)
 %
 % m(x) = \prod_i m_i(x)
 %
-% Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2010-06-04.
+% Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2010-08-04.
 %
 % See also MEANFUNCTIONS.M.
 
@@ -31,15 +31,19 @@ if nargin==3                                               % compute mean vector
     A = A.*feval(f{:}, hyp(v==ii), x);                        % accumulate means
   end
 else                                                 % compute derivative vector
-  ii = v(i);                                               % which mean function
-  j = sum(v(1:i)==ii);                            % which parameter in that mean
-  for jj = 1:length(mean)
-    f = mean(jj);
-    if iscell(f{:}), f = f{:}; end         % dereference cell array if necessary
-    if jj==ii
-      A = A .* feval(f{:}, hyp(v==jj), x, j);              % multiply derivative
-    else
-      A = A .* feval(f{:}, hyp(v==jj), x);                       % multiply mean
+  if i<=length(v)
+    ii = v(i);                                             % which mean function
+    j = sum(v(1:i)==ii);                          % which parameter in that mean
+    for jj = 1:length(mean)
+      f = mean(jj);
+      if iscell(f{:}), f = f{:}; end       % dereference cell array if necessary
+      if jj==ii
+        A = A .* feval(f{:}, hyp(v==jj), x, j);            % multiply derivative
+      else
+        A = A .* feval(f{:}, hyp(v==jj), x);                     % multiply mean
+      end
     end
+  else
+    A = zeros(n,1);
   end
 end

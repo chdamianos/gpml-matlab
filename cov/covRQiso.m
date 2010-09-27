@@ -1,4 +1,4 @@
-function [A, B] = covRQiso(hyp, x, z)
+function K = covRQiso(hyp, x, z, i)
 
 % Rational Quadratic covariance function with isotropic distance measure. The
 % covariance function is parameterized as:
@@ -13,31 +13,40 @@ function [A, B] = covRQiso(hyp, x, z)
 %         log(sqrt(sf2))
 %         log(alpha) ]
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2009-12-18.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-09-10.
 %
 % See also COVFUNCTIONS.M.
 
-if nargin<2, A = '3'; return; end                  % report number of parameters
-
-n = size(x,1);
+if nargin<2, K = '3'; return; end                  % report number of parameters
+if nargin<3, z = []; end                                   % make sure, z exists
+xeqz = numel(z)==0; dg = strcmp(z,'diag') && numel(z)>0;        % determine mode
 
 ell = exp(hyp(1));
 sf2 = exp(2*hyp(2));
 alpha = exp(hyp(3));
 
-if nargin == 2                                       % compute covariance matrix
-  K = (1+0.5*sq_dist(x'/ell)/alpha);
-  A = sf2*(K.^(-alpha));
-elseif nargout == 2                               % compute test set covariances
-  A = sf2*ones(size(z,1),1);
-  B = sf2*((1+0.5*sq_dist(x'/ell,z'/ell)/alpha).^(-alpha));
-else                                               % compute derivative matrices
-  K = (1+0.5*sq_dist(x'/ell)/alpha);
-  if z == 1                                            % length scale parameters
-    A = sf2*K.^(-alpha-1).*sq_dist(x'/ell);
-  elseif z == 2                                            % magnitude parameter
-    A = 2*sf2*(K.^(-alpha));
+% precompute squared distances
+if dg                                                               % vector kxx
+  D2 = zeros(size(x,1),1);
+else
+  if xeqz                                                 % symmetric matrix Kxx
+    D2 = sq_dist(x'/ell);
+  else                                                   % cross covariances Kxz
+    D2 = sq_dist(x'/ell,z'/ell);
+  end
+end
+
+if nargin<4                                                        % covariances
+  K = sf2*((1+0.5*D2/alpha).^(-alpha));
+else                                                               % derivatives
+  if i==1                                               % length scale parameter
+    K = sf2*(1+0.5*D2/alpha).^(-alpha-1).*D2;
+  elseif i==2                                              % magnitude parameter
+    K = 2*sf2*((1+0.5*D2/alpha).^(-alpha));
+  elseif i==3
+    K = (1+0.5*D2/alpha);
+    K = sf2*K.^(-alpha).*(0.5*D2./K - alpha*log(K));
   else
-    A = sf2*K.^(-alpha).*(0.5*sq_dist(x'/ell)./K - alpha*log(K));
+    error('Unknown hyperparameter')
   end
 end

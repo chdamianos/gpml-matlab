@@ -2,9 +2,12 @@
 % Methods currently implemented include:
 %
 %   infExact    Exact inference (only possible with Gaussian likelihood)
+%   infFITC     Large scale regression with approximate covariance matrix
 %   infLaplace  Laplace's Approximation
 %   infEP       Expectation Propagation
 %   infVB       Variational Bayes
+%
+%   infLOO      Leave-One-Out predictive probability and Least-Squares Approxim.
 %
 % The interface to the approximation methods is the following:
 %
@@ -35,4 +38,4 @@
 % For more information on the individual approximation methods and their
 % implementations, see the separate inf??.m files. See also gp.m
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18

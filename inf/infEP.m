@@ -8,6 +8,8 @@ function [post nlZ dnlZ] = infEP(hyp, mean, cov, lik, x, y)
 % according to the targets.
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2010-02-25.
+%
+% See also INFMETHODS.M.
 
 persistent last_ttau last_tnu              % keep tilde parameters between calls
 tol = 1e-4; max_sweep = 10; min_sweep = 2;     % tolerance to stop EP iterations
@@ -91,7 +93,7 @@ if nargout>2                                           % do we want derivatives?
 
   F = alpha*alpha'-repmat(sW,1,n).*solve_chol(L,diag(sW));   % covariance hypers
   for j=1:length(hyp.cov)
-    dK = feval(cov{:}, hyp.cov, x, j);
+    dK = feval(cov{:}, hyp.cov, x, [], j);
     dnlZ.cov(j) = -sum(sum(F.*dK))/2;
   end
   for i = 1:numel(hyp.lik)                                   % likelihood hypers
@@ -100,8 +102,8 @@ if nargout>2                                           % do we want derivatives?
   end
   [junk,dlZ] = feval(lik, hyp.lik, y, nu_n./tau_n+m, 1./tau_n, inf); % mean hyps
   for i = 1:numel(hyp.mean)
-    dmean = feval(mean{:}, hyp.mean, x, i);
-    dnlZ.mean(i) = -dlZ'*dmean;
+    dm = feval(mean{:}, hyp.mean, x, i);
+    dnlZ.mean(i) = -dlZ'*dm;
   end
 end
 

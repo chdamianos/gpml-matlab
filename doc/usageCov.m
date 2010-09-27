@@ -2,7 +2,7 @@
 %
 % See also covFunctions.m.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2010-07-23
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2011-02-18
 clear all, close all
 n = 5; D = 3; x = randn(n,D); xs = randn(3,D);  % create a data set
 
@@ -42,7 +42,8 @@ feval(cov{:})
 feval(cov{:},hyp,x)
 
 % 3) evaluate the function on x and xs to get cross-terms
-[kss,Ks] = feval(cov{:},hyp,x,xs)
+kss = feval(cov{:},hyp,xs,'diag')
+Ks  = feval(cov{:},hyp,x,xs)
 
 % 4) compute the derivatives w.r.t. to hyperparameter i
-i = 1; feval(cov{:},hyp,x,i)
+i = 1; feval(cov{:},hyp,x,[],i)
