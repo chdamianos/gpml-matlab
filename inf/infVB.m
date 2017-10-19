@@ -1,9 +1,11 @@
 function [post, nlZ, dnlZ] = infVB(hyp, mean, cov, lik, x, y, opt)
 
 % Variational approximation to the posterior Gaussian process.
-% The function takes a specified covariance function (see covFunctions.m) and
-% likelihood function (see likFunctions.m), and is designed to be used with
-% gp.m. See also infMethods.m.
+%
+% Compute a parametrization of the posterior, the negative log marginal
+% likelihood and its derivatives w.r.t. the hyperparameters. The function takes
+% a specified covariance function (see covFunctions.m) and likelihood function
+% (see likFunctions.m), and is designed to be used with gp.m.
 %
 % Minimisation of an upper bound on the negative marginal likelihood using a
 % sequence of infLaplace calls where the smoothed likelihood
@@ -16,7 +18,7 @@ function [post, nlZ, dnlZ] = infVB(hyp, mean, cov, lik, x, y, opt)
 %
 % Copyright (c) by Hannes Nickisch 2016-10-21.
 %
-% See also INFMETHODS.M.
+% See also INFMETHODS.M, GP.M.
 
 n = size(x,1);
 if nargin<=6, opt = []; end                        % make opt variable available

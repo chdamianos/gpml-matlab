@@ -31,8 +31,10 @@ function [post nlZ dnlZ] = infPrior(inf, prior, hyp, varargin)
 %     covariance function hyperparameter
 %     i.e. exp(hyp.cov(2)) ~ Weibull(lam,k)
 %
-% Return a parametrization of the posterior, the negative log marginal
-% likelihood and its derivatives w.r.t. the hyperparameters.
+% Compute a parametrization of the posterior, the negative log marginal
+% likelihood and its derivatives w.r.t. the hyperparameters. The function takes
+% a specified covariance function (see covFunctions.m) and likelihood function
+% (see likFunctions.m), and is designed to be used with gp.m.
 %
 % Note that at most 1 prior is allowed per hyperparameter. We consider the
 % specification of more than 1 prior for a hyperparameter as an error.

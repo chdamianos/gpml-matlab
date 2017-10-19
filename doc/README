@@ -1,7 +1,7 @@
- GAUSSIAN PROCESS REGRESSION AND CLASSIFICATION Toolbox version 4.0
+ GAUSSIAN PROCESS REGRESSION AND CLASSIFICATION Toolbox version 4.1
     for GNU Octave 3.2.x and Matlab 7.x
 
-Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-10-19.
+Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2017-10-19.
 
 
 
@@ -140,7 +140,7 @@ Thanks to Giampiero Salvi for posting the workaround.
 3) CURRENT VERSION
 ==================
 
-The current version of the programs is 4.0. Previous versions of the code are
+The current version of the programs is 4.1. Previous versions of the code are
 available at http://www.gaussianprocess.org/gpml/code/oldcode.html.
 
 
@@ -148,7 +148,32 @@ available at http://www.gaussianprocess.org/gpml/code/oldcode.html.
 4) DIFFERENCES TO PREVIOUS VERSIONS
 ===================================
 
-NEW in version 4.0, 2016-09-29
+NEW in version 4.1, 2017-10-19
+------------------------------
+
+Logdet-estimation functionality for grid-based approximate covariances
+- Lanczos subspace estimation
+- Chebyshef polynomial expansion
+
+More generic infEP functionality
+- dense computations and sparse approximations using the same code
+- covering KL inference as a special cas of EP
+
+New infKL function contributed by Emtiyaz Khan and Wu Lin
+- Conjugate-Computation Variational Inference algorithm
+- much more scalable than previous versions
+
+Time-series covariance functions on the positive real line
+- covW (i-times integrated) Wiener process covariance
+- covOU (i-times integrated) Ornstein-Uhlenbeck process covariance (contributed by Juan Pablo Carbajal)
+- covULL underdamped linear Langevin process covariance (contributed by Robert MacKay)
+- covFBM Fractional Brownian motion covariance
+
+New covariance functions
+- covWarp implements k(w(x),w(z)) where w is a "warping" function
+- covMatern has been extended to also accept non-integer distance parameters
+
+NEW in version 4.0, 2016-10-19
 ------------------------------
 A major code restructuring effort did take place in the current release unifying
 certain inference functions and allowing more flexibility in covariance function
@@ -191,7 +216,7 @@ New mean functions
 New optimizer
  - added a new minimize_minfunc, contributed by Truong X. Nghiem
 
-New prio
+New prior
  - added prior{Equal|Same}Multi forcing a group of hyperparameters to the same value
 
 New GLM link function

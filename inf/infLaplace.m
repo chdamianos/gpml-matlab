@@ -1,13 +1,15 @@
 function [post nlZ dnlZ alpha] = infLaplace(hyp, mean, cov, lik, x, y, opt)
 
 % Laplace approximation to the posterior Gaussian process.
-% The function takes a specified covariance function (see covFunctions.m) and
-% likelihood function (see likFunctions.m), and is designed to be used with
-% gp.m. See also infMethods.m.
+%
+% Compute a parametrization of the posterior, the negative log marginal
+% likelihood and its derivatives w.r.t. the hyperparameters. The function takes
+% a specified covariance function (see covFunctions.m) and likelihood function
+% (see likFunctions.m), and is designed to be used with gp.m.
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2016-10-21.
 %
-% See also INFMETHODS.M.
+% See also INFMETHODS.M, GP.M.
 
 persistent last_alpha                                   % copy of the last alpha
 if any(isnan(last_alpha)), last_alpha = zeros(size(last_alpha)); end   % prevent
