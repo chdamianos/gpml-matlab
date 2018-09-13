@@ -1,51 +1,53 @@
 function [varargout] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys)
-% Gaussian Process inference and prediction. The gp function provides a
-% flexible framework for Bayesian inference and prediction with Gaussian
-% processes for scalar targets, i.e. both regression and binary
-% classification. The prior is Gaussian process, defined through specification
-% of its mean and covariance function. The likelihood function is also
-% specified. Both the prior and the likelihood may have hyperparameters
-% associated with them.
-%
-% Two modes are possible: training or prediction: if no test cases are
-% supplied, then the negative log marginal likelihood and its partial
-% derivatives w.r.t. the hyperparameters is computed; this mode is used to fit
-% the hyperparameters. If test cases are given, then the test set predictive
-% probabilities are returned. Usage:
-%
-%   training: [nlZ dnlZ          ] = gp(hyp, inf, mean, cov, lik, x, y);
-% prediction: [ymu ys2 fmu fs2   ] = gp(hyp, inf, mean, cov, lik, x, y, xs);
-%         or: [ymu ys2 fmu fs2 lp] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys);
-%
+% GP Gaussian Process inference and prediction.
+%  [NLZ DNLZ          ] = GP (HYP, INF, MEAN, COV, LIK, X, Y); Training
+%  [YMU YS2 FMU FS2   ] = GP (HYP, INF, MEAN, COV, LIK, X, Y, XS); Prediction
+%  [YMU YS2 FMU FS2 LP] = GP (HYP, INF, MEAN, COV, LIK, X, Y, XS, YS); Prediction
+% 
 % where:
 %
-%   hyp      struct of column vectors of mean/cov/lik hyperparameters
-%   inf      function specifying the inference method 
-%   mean     prior mean function
-%   cov      prior covariance function
-%   lik      likelihood function
-%   x        n by D matrix of training inputs
-%   y        column vector of length n of training targets
-%   xs       ns by D matrix of test inputs
-%   ys       column vector of length nn of test targets
+%    HYP      struct of column vectors of mean/cov/lik hyperparameters
+%    INF      function specifying the inference method 
+%    MEAN     prior mean function
+%    COV      prior covariance function
+%    LIK      likelihood function
+%    X        n by D matrix of training inputs
+%    Y        column vector of length n of training targets
+%    XS       ns by D matrix of test inputs
+%    YS       column vector of length nn of test targets
 %
-%   nlZ      returned value of the negative log marginal likelihood
-%   dnlZ     struct of column vectors of partial derivatives of the negative
-%               log marginal likelihood w.r.t. mean/cov/lik hyperparameters
-%   ymu      column vector (of length ns) of predictive output means
-%   ys2      column vector (of length ns) of predictive output variances
-%   fmu      column vector (of length ns) of predictive latent means
-%   fs2      column vector (of length ns) of predictive latent variances
-%   lp       column vector (of length ns) of log predictive probabilities
+%    NLZ      returned value of the negative log marginal likelihood
+%    DNLZ     struct of column vectors of partial derivatives of the negative
+%                 log marginal likelihood w.r.t. mean/cov/lik hyperparameters
+%    YMU      column vector (of length ns) of predictive output means
+%    YS2      column vector (of length ns) of predictive output variances
+%    FMU      column vector (of length ns) of predictive latent means
+%    FS2      column vector (of length ns) of predictive latent variances
+%    LP       column vector (of length ns) of log predictive probabilities
 %
-%   post     struct representation of the (approximate) posterior
+%   POST     struct representation of the (approximate) posterior
 %            3rd output in training mode or 6th output in prediction mode
 %            can be reused in prediction mode gp(.., cov, lik, x, post, xs,..)
 %
-% See also infMethods.m, meanFunctions.m, covFunctions.m, likFunctions.m.
+%  The gp function provides a flexible framework for Bayesian inference and 
+% prediction with Gaussian processes for scalar targets, i.e. both regression 
+% and binary classification.
+% The prior is Gaussian process, defined through specification of its mean and 
+% covariance function. The likelihood function is also specified.
+% Both the prior and the likelihood may have hyperparameters associated with 
+% them.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
-%                                      File automatically generated using noweb.
+% The function can be used in two modes: training or prediction.
+% Trainig mode is active when no test cases XS are supplied, then the negative 
+% log marginal likelihood and its partial derivatives w.r.t. the hyperparameters
+% are computed. This mode is used to fit the hyperparameters. 
+% Prediction mode is active when test cases XS are given, then the test set 
+% predictive probabilities are returned.
+%
+% See also INFMETHODS, MEANFUNCTIONS, COVFUNCTIONS, LIKFUNCTIONS.
+
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-06-15.
+
 if nargin<7 || nargin>9
   disp('Usage: [nlZ dnlZ          ] = gp(hyp, inf, mean, cov, lik, x, y);')
   disp('   or: [ymu ys2 fmu fs2   ] = gp(hyp, inf, mean, cov, lik, x, y, xs);')
