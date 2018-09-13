@@ -2,19 +2,18 @@ Gaussian Process Regression and Classification Toolbox
 ======================================================
 version 4.2. For GNU Octave 3.2.x and Matlab 7.x
 
-Copyright (C) 2015-2018 - Carl Edward Rasmussen
+> Copyright (C) 2015-2018 - Carl Edward Rasmussen
+>
+> Copyright (C) 2015-2018 - Hannes Nickisch
 
-Copyright (C) 2015-2018 - Hannes Nickisch
-
-0) HOW TO READ
---------------
+## HOW TO READ
 
 If you want to get started without further delay, then read section 1) below
 and jump right to the examples in doc/index.html.
 
 
-1) ABOUT THESE PROGRAMS
------------------------
+## ABOUT THESE PROGRAMS
+
 
 This collection of matlab programs implements and demonstrates some of the
 algorithms described in
@@ -44,36 +43,31 @@ k) the paper by Nickisch, Solin and Grigorievskiy: "State Space Gaussian Process
 
 l) the paper by Pleiss, Gardner, Weinberger and Wilson "Constant-Time Predictive Distributions for Gaussian Processes", ICLM, 2018
 
-There are 7 code subdirectories: cov, doc, inf, lik, mean, prior and util.
+There are 7 code subdirectories: `cov`, `doc`, `inf`, `lik`, `mean`, `prior`, and `util`.
 
-cov/      contains covariance functions cov*.m
-          => see covFunctions.m
+`cov/`      contains covariance functions `cov*.m`  => see `covFunctions.m`
 
-doc/      contains an index.html file providing documentation. This information
+`doc/`      contains an index.html file providing documentation. This information
           is also available from http://www.GaussianProcess.org/gpml/code.
           Usage of mean, cov, classification and regression is demonstrated
-          in usage*.m. Further details can be found in the developer
-          documentation manual.pdf.
+          in `usage*.m`. Further details can be found in the developer
+          documentation `manual.pdf`.
 
-inf/      contains the inference algorithms inf*.m
-          => see infMethods.m
+`inf/`      contains the inference algorithms inf*.m => see `infMethods.m`
 
-lik/      contains the likelihood functions lik*.m
-          => see likFunctions.m
+`lik/`      contains the likelihood functions lik*.m => see `likFunctions.m`
 
-mean/     contains the mean functions mean*.m
-          => see meanFunctions.m
+`mean/`     contains the mean functions mean*.m => see `meanFunctions.m`
 
-prior/    contains the hyperparameter prior distributions prior*.m
-          => see priorDistributions.m
+`prior/`    contains the hyperparameter prior distributions prior*.m => see `priorDistributions.m`
 
-util/     contains optimisation routines, backward compatibility programs and
+`util/`     contains optimisation routines, backward compatibility programs and
           small auxiliary scripts
 
-Before running the demos or any other part of the code, you should execute startup.m to add all necessary directories to your path. In Octave, you can also use the .octaverc file.
+Before running the demos or any other part of the code, you should execute `startup.m` to add all necessary directories to your path. In Octave, you can also use the `.octaverc` file.
 
-2) ABOUT MEX FILES
-------------------
+## ABOUT MEX FILES
+
 Some of the programs make use of the MEX facility in matlab for more efficient
 implementation. However, if you don't know about how to compile MEX files, you
 do not need to worry about this -- the code runs anyway. If you do compile the
@@ -104,26 +98,26 @@ Under Ubuntu, you can achieve this by installing the packages fort77 and
 gfortran, respectively. Note that the code is GNU licensed.
 
 Compilation is done by editing util/lbfgsb/Makefile. In any case, you need to
-provide $MATLAB_HOME which can be found by the commands 'locate matlab' or
-'find / -name "matlab"'. You can choose between two compilation modes:
+provide `$MATLAB_HOME` which can be found by the commands `locate matlab` or
+`find / -name "matlab"`. You can choose between two compilation modes:
 
 a) without mex utility by Matlab                                     [default]
-  provide $MEX_SUFFIX and $MATLAB_LIB, then type 'make nomex'
+  provide `$MEX_SUFFIX` and `$MATLAB_LIB`, then type `make nomex`
 
 b) using the mex utility by Matlab
-  provide $MEX, then type 'make mex'
+  provide `$MEX`, then type `make mex`
 
 c) compilation for Octave
-  provide Octave variables and type 'make oct'
+  provide Octave variables and type `make oct`
 
 In Ubuntu 10.04 LTS, the libg2c library needed for both 1)+a) and 1)+b) is not
-included per default. If 'ls /usr/lib/libg2c.*' does not list anything
+included per default. If `ls /usr/lib/libg2c.*` does not list anything
 this is the case on your machine. You then whant to install the packages
 gcc-3.4-base and libg2c0 e.g. from
 http://packages.ubuntu.com/hardy/gcc-3.4-base and
 http://packages.ubuntu.com/hardy/libg2c0.
 After installation, you have to create a symbolic link by 'cd /usr/lib' and
-'ln -s libg2c.so.0 libg2c.so'.
+`ln -s libg2c.so.0 libg2c.so`.
 
 There were reports of problems running the mex files on recent 64bit Ubuntu
 since the libgfortran.3.0.0 that comes with matlab
@@ -131,23 +125,22 @@ since the libgfortran.3.0.0 that comes with matlab
 as the libgfortran.3.0.0 that comes with the ubuntu package
 libgfortran3 and that is used when linking. So running the mex file
 results in a version mismatch error. The issue can be solved by changing
-the name of to the matlab file and linking to the ubuntu file instead:
-  in $(MATLAB_HOME)/sys/os/glnxa64 run
-    'sudo mv libgfortran.3.0.0 libgfortran.3.0.0_matlab'
-    'sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3.0.0 libgfortran.3.0.0'
+the name of to the matlab file and linking to the ubuntu file instead in `$(MATLAB_HOME)/sys/os/glnxa64` run:
+
+    sudo mv libgfortran.3.0.0 libgfortran.3.0.0_matlab
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3.0.0 libgfortran.3.0.0
+
 Thanks to Giampiero Salvi for posting the workaround.
 
 [1]: https://github.com/pcarbo/lbfgsb-matlab
 [2]: http://www.mathworks.com/support/compilers/R2010a
 
-3) CURRENT VERSION
-------------------
+## CURRENT VERSION
 
 The current version of the programs is 4.2. Previous versions of the code are
 available at http://www.gaussianprocess.org/gpml/code/oldcode.html.
 
-4) DIFFERENCES TO PREVIOUS VERSIONS
------------------------------------
+## DIFFERENCES TO PREVIOUS VERSIONS
 
 ### NEW in version 4.2, 2018-06-11
 State space covariance approximation apxState, infState
