@@ -1,128 +1,123 @@
- GAUSSIAN PROCESS REGRESSION AND CLASSIFICATION Toolbox version 4.2
-    for GNU Octave 3.2.x and Matlab 7.x
+Gaussian Process Regression and Classification Toolbox
+======================================================
+version 4.2. For GNU Octave 3.2.x and Matlab 7.x
 
-Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-06-11.
+> Copyright (C) 2015-2018 - Carl Edward Rasmussen
+>
+> Copyright (C) 2015-2018 - Hannes Nickisch
 
-
-
-0) HOW TO READ
-==============
+## HOW TO READ
 
 If you want to get started without further delay, then read section 1) below
 and jump right to the examples in doc/index.html.
 
 
+## ABOUT THESE PROGRAMS
 
-1) ABOUT THESE PROGRAMS
-=======================
 
 This collection of matlab programs implements and demonstrates some of the
-algorithms described in 
-a) the book by Rasmussen and Williams: "Gaussian Processes for Machine Learning", 
-   the MIT Press 2006, in
-b) the article by Nickisch and Rasmussen: "Approximations for Binary Gaussian
-   Process Classification", JMLR 2008, in
-c) the article by Candela and Rasmussen: "A Unifying View of Sparse Approximate
-   Gaussian Process Regression", JMLR 2005, in
-d) the paper by Murray, Adams and Mackay: "Elliptical slice sampling",
-   AISTATS 2010, in
-e) the report by Neal: "Annealed Importance Sampling", UToronto 1998, in
-f) the paper by Naish-Guzman and Holden: "The Generalized FITC Approximation",
-   NIPS, 2007, in
-g) the paper by Duvenaud, Nickisch and Rasmussen: "Additive Gaussian Processes",
-   NIPS, 2011, in
-h) the paper by Wilson and Adams: "Gaussian Process Kernels for Pattern
-   Discovery and Extrapolation", ICML, 2013, in
-i) the paper by Snelson, Rasmussen and Ghahramani: "Warped Gaussian Processes",
-   NIPS, 2003, and in
-j) the paper by Wilson and Nickisch: "Kernel interpolation for scalable
-   structured Gaussian processes (KISS-GP)", ICLM, 2015,
-k) the paper by Nickisch, Solin and Grigorievskiy: "State Space Gaussian
-   Processes with Non-Gaussian Likelihood", ICLM, 2018, and
-l) the paper by Pleiss, Gardner, Weinberger and Wilson "Constant-Time Predictive
-   Distributions for Gaussian Processes", ICLM, 2018.
+algorithms described in
 
-There are 7 code subdirectories: cov, doc, inf, lik, mean, prior and util.
+a) the book by Rasmussen and Williams: "Gaussian Processes for Machine Learning",
+   the MIT Press 2006
+   
+b) the article by Nickisch and Rasmussen: "Approximations for Binary Gaussian Process Classification", JMLR 2008
+   
+c) the article by Candela and Rasmussen: "A Unifying View of Sparse Approximate Gaussian Process Regression", JMLR 2005
+   
+d) the paper by Murray, Adams and Mackay: "Elliptical slice sampling", AISTATS 2010
+   
+e) the report by Neal: "Annealed Importance Sampling", UToronto 1998
 
-cov/      contains covariance functions cov*.m
-          => see covFunctions.m
+f) the paper by Naish-Guzman and Holden: "The Generalized FITC Approximation", NIPS, 2007
+   
+g) the paper by Duvenaud, Nickisch and Rasmussen: "Additive Gaussian Processes", NIPS, 2011
+   
+h) the paper by Wilson and Adams: "Gaussian Process Kernels for Pattern Discovery and Extrapolation", ICML, 2013
+   
+i) the paper by Snelson, Rasmussen and Ghahramani: "Warped Gaussian Processes", NIPS, 2003
+   
+j) the paper by Wilson and Nickisch: "Kernel interpolation for scalable structured Gaussian processes (KISS-GP)", ICLM, 2015
 
-doc/      contains an index.html file providing documentation. This information
+k) the paper by Nickisch, Solin and Grigorievskiy: "State Space Gaussian Processes with Non-Gaussian Likelihood", ICLM, 2018
+
+l) the paper by Pleiss, Gardner, Weinberger and Wilson "Constant-Time Predictive Distributions for Gaussian Processes", ICLM, 2018
+
+There are 7 code subdirectories: `cov`, `doc`, `inf`, `lik`, `mean`, `prior`, and `util`.
+
+`cov/`      contains covariance functions `cov*.m`  => see `covFunctions.m`
+
+`doc/`      contains an index.html file providing documentation. This information
           is also available from http://www.GaussianProcess.org/gpml/code.
           Usage of mean, cov, classification and regression is demonstrated
-          in usage*.m. Further details can be found in the developer
-          documentation manual.pdf.
+          in `usage*.m`. Further details can be found in the developer
+          documentation `manual.pdf`.
 
-inf/      contains the inference algorithms inf*.m
-          => see infMethods.m
+`inf/`      contains the inference algorithms inf*.m => see `infMethods.m`
 
-lik/      contains the likelihood functions lik*.m
-          => see likFunctions.m
+`lik/`      contains the likelihood functions lik*.m => see `likFunctions.m`
 
-mean/     contains the mean functions mean*.m
-          => see meanFunctions.m
+`mean/`     contains the mean functions mean*.m => see `meanFunctions.m`
 
-prior/    contains the hyperparameter prior distributions prior*.m
-          => see priorDistributions.m
+`prior/`    contains the hyperparameter prior distributions prior*.m => see `priorDistributions.m`
 
-util/     contains optimisation routines, backward compatibility programs and
+`util/`     contains optimisation routines, backward compatibility programs and
           small auxiliary scripts
 
-Before running the demos or any other part of the code, you should execute 
-startup.m to add all necessary directories to your path. In Octave, you can also
-use the .octaverc file.
+Before running the demos or any other part of the code, you should execute `startup.m` to add all necessary directories to your path. In Octave, you can also use the `.octaverc` file.
 
-
-
-2) ABOUT MEX FILES
-==================
+## ABOUT MEX FILES
 
 Some of the programs make use of the MEX facility in matlab for more efficient
 implementation. However, if you don't know about how to compile MEX files, you
 do not need to worry about this -- the code runs anyway. If you do compile the
-MEX files, this is automatically detected, and the program will run more 
+MEX files, this is automatically detected, and the program will run more
 efficiently. If you do not have a compiler installed on your system, you might
 want to consult [3].
 
-Two components of the toolbox can be accelerated by MEX. 
+Two components of the toolbox can be accelerated by MEX.
 
-First, there is an auxiliary functions solve_chol.m having a MEX equivalent. 
-This can be compiled by either executing util/make.m from the Matlab/Octave 
+First, there is an auxiliary functions solve_chol.m having a MEX equivalent.
+This can be compiled by either executing util/make.m from the Matlab/Octave
 command line. In addition to that, we provide a Makefile
 for Matlab in util/ that you can run by simply typing make in your shell after
-having supplied your Matlab path and your operating system. 
+having supplied your Matlab path and your operating system.
 We recommend the make.m script because it works both under Matlab and Octave.
 
 Second, in order to use the L-BFGS minimiser for hyperparameter optimisation as
-an equivalent to minimize.m, you have to compile Peter Carbonetto's 
+an equivalent to minimize.m, you have to compile Peter Carbonetto's
 "Matlab interface for L-BFGS-B" [1] which was extended to also work for Octave
 by José Vallet. The challenge here is the Fortran 77 code.
-We provide a Makefile suitable for Linux 32/64 bit and Mac whenever you have 
-1) g77 
-or 
-2) gfortran
+We provide a Makefile suitable for Linux 32/64 bit and Mac whenever you have
+
+1. g77 or
+2. gfortran
+
 properly set up. The latter is prefered on current Ubuntu systems.
-Under Ubuntu, you can achieve this by installing the packages fort77 and 
+Under Ubuntu, you can achieve this by installing the packages fort77 and
 gfortran, respectively. Note that the code is GNU licensed.
 
-Compilation is done by editing util/lbfgsb/Makefile. In any case, you need to 
-provide $MATLAB_HOME which can be found by the commands 'locate matlab' or 
-'find / -name "matlab"'. You can choose between two compilation modes:
-a) without mex utility by Matlab                                     [default]
-  provide $MEX_SUFFIX and $MATLAB_LIB, then type 'make nomex'
-b) using the mex utility by Matlab
-  provide $MEX, then type 'make mex'
-c) compilation for Octave
-  provide Octave variables and type 'make oct'
+Compilation is done by editing util/lbfgsb/Makefile. In any case, you need to
+provide `$MATLAB_HOME` which can be found by the commands `locate matlab` or
+`find / -name "matlab"`. You can choose between two compilation modes:
 
-In Ubuntu 10.04 LTS, the libg2c library needed for both 1)+a) and 1)+b) is not 
-included per default. If 'ls /usr/lib/libg2c.*' does not list anything 
-this is the case on your machine. You then whant to install the packages 
+a) without mex utility by Matlab                                     [default]
+  provide `$MEX_SUFFIX` and `$MATLAB_LIB`, then type `make nomex`
+
+b) using the mex utility by Matlab
+  provide `$MEX`, then type `make mex`
+
+c) compilation for Octave
+  provide Octave variables and type `make oct`
+
+In Ubuntu 10.04 LTS, the libg2c library needed for both 1)+a) and 1)+b) is not
+included per default. If `ls /usr/lib/libg2c.*` does not list anything
+this is the case on your machine. You then whant to install the packages
 gcc-3.4-base and libg2c0 e.g. from
 http://packages.ubuntu.com/hardy/gcc-3.4-base and
 http://packages.ubuntu.com/hardy/libg2c0.
-After installation, you have to create a symbolic link by 'cd /usr/lib' and 
-'ln -s libg2c.so.0 libg2c.so'.
+After installation, you have to create a symbolic link by 'cd /usr/lib' and
+`ln -s libg2c.so.0 libg2c.so`.
 
 There were reports of problems running the mex files on recent 64bit Ubuntu
 since the libgfortran.3.0.0 that comes with matlab
@@ -130,31 +125,24 @@ since the libgfortran.3.0.0 that comes with matlab
 as the libgfortran.3.0.0 that comes with the ubuntu package
 libgfortran3 and that is used when linking. So running the mex file
 results in a version mismatch error. The issue can be solved by changing
-the name of to the matlab file and linking to the ubuntu file instead:
-  in $(MATLAB_HOME)/sys/os/glnxa64 run
-    'sudo mv libgfortran.3.0.0 libgfortran.3.0.0_matlab'
-    'sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3.0.0 libgfortran.3.0.0'
+the name of to the matlab file and linking to the ubuntu file instead in `$(MATLAB_HOME)/sys/os/glnxa64` run:
+
+    sudo mv libgfortran.3.0.0 libgfortran.3.0.0_matlab
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3.0.0 libgfortran.3.0.0
+
 Thanks to Giampiero Salvi for posting the workaround.
 
-[1] https://github.com/pcarbo/lbfgsb-matlab
-[2] http://www.mathworks.com/support/compilers/R2010a
+[1]: https://github.com/pcarbo/lbfgsb-matlab
+[2]: http://www.mathworks.com/support/compilers/R2010a
 
-
-
-3) CURRENT VERSION
-==================
+## CURRENT VERSION
 
 The current version of the programs is 4.2. Previous versions of the code are
 available at http://www.gaussianprocess.org/gpml/code/oldcode.html.
 
+## DIFFERENCES TO PREVIOUS VERSIONS
 
-
-4) DIFFERENCES TO PREVIOUS VERSIONS
-===================================
-
-NEW in version 4.2, 2018-06-11
-------------------------------
-
+### NEW in version 4.2, 2018-06-11
 State space covariance approximation apxState, infState
  - In addition to sparse (apxSparse) and grid-based (apxGrid) covariance approximations, we offer fast inference for univariate GPs exploiting the state space representation (apxState)
    See doc/demoState to get started.
@@ -171,35 +159,30 @@ Bugfixes
 Little features
  - add modes proj and fact to covDot
 
-
-NEW in version 4.1, 2017-10-19
-------------------------------
-
+### NEW in version 4.1, 2017-10-19
 Logdet-estimation functionality for grid-based approximate covariances
-- Lanczos subspace estimation
-- Chebyshef polynomial expansion
+ - Lanczos subspace estimation
+ - Chebyshef polynomial expansion
 
 More generic infEP functionality
-- dense computations and sparse approximations using the same code
-- covering KL inference as a special case of EP
+ - dense computations and sparse approximations using the same code
+ - covering KL inference as a special case of EP
 
 New infKL function contributed by Emtiyaz Khan and Wu Lin
-- Conjugate-Computation Variational Inference algorithm
-- much more scalable than previous versions
+ - Conjugate-Computation Variational Inference algorithm
+ - much more scalable than previous versions
 
 Time-series covariance functions on the positive real line
-- covW (i-times integrated) Wiener process covariance
-- covOU (i-times integrated) Ornstein-Uhlenbeck process covariance (contributed by Juan Pablo Carbajal)
-- covULL underdamped linear Langevin process covariance (contributed by Robert MacKay)
-- covFBM Fractional Brownian motion covariance
+ - covW (i-times integrated) Wiener process covariance
+ - covOU (i-times integrated) Ornstein-Uhlenbeck process covariance (contributed by Juan Pablo Carbajal)
+ - covULL underdamped linear Langevin process covariance (contributed by Robert MacKay)
+ - covFBM Fractional Brownian motion covariance
 
 New covariance functions
-- covWarp implements k(w(x),w(z)) where w is a "warping" function
-- covMatern has been extended to also accept non-integer distance parameters
+ - covWarp implements k(w(x),w(z)) where w is a "warping" function
+ - covMatern has been extended to also accept non-integer distance parameters
 
-
-NEW in version 4.0, 2016-10-19
-------------------------------
+### NEW in version 4.0, 2016-09-29
 A major code restructuring effort did take place in the current release unifying
 certain inference functions and allowing more flexibility in covariance function
 composition. We also redesigned the whole derivative computation pipeline to
@@ -241,7 +224,7 @@ New mean functions
 New optimizer
  - added a new minimize_minfunc, contributed by Truong X. Nghiem
 
-New prior
+New priors
  - added prior{Equal|Same}Multi forcing a group of hyperparameters to the same value
 
 New GLM link function
@@ -251,9 +234,7 @@ Smaller fixes
  - two-fold speedup of util/elsympol used by covADD by Truong X. Nghiem
  - bugfix in util/logphi as reported by John Darby
 
-
-NEW in version 3.6, 2015-07-07
-------------------------------
+### NEW in version 3.6, 2015-07-07
 - bugfix in likGaussWarp as reported by Obaid Malik
 - added a new inference function infGrid_Laplace allowing to use non-Gaussian likelihoods for large grids
 - fixed a bug due to Octave evaluating norm([]) to a tiny nonzero value, modified all lik/lik*.m functions reported by Philipp Richter
@@ -263,8 +244,7 @@ NEW in version 3.6, 2015-07-07
 - bugfix in covPP{iso,ard}
 
 
-NEW in version 3.5, 2014-12-08
-------------------------------
+### NEW in version 3.5, 2014-12-08
 - mechanism for specifying hyperparameter priors (together with Roman Garnett and José Vallet)
 - new inference method inf/infGrid allowing efficient inference for data defined on a Cartesian grid (together with Andrew Wilson)
 - new mean/cov functions for preference learning: meanPref/covPref
@@ -290,8 +270,7 @@ NEW in version 3.5, 2014-12-08
 - bugfix in infFITC_EP for ttau->inf (suggested by Ryan Turner)
 
 
-NEW in version 3.4, 2013-11-11
-------------------------------
+### NEW in version 3.4, 2013-11-11
 - new likelihood function for warped GPs: likGaussWarp
 - new exponential likelihood function: likExp
 - new Weibull likelihood function: likWeibull
@@ -301,8 +280,7 @@ NEW in version 3.4, 2013-11-11
 - allow for zero noise variance for infExact
 
 
-NEW in version 3.3, 2013-10-19
-------------------------------
+### NEW in version 3.3, 2013-10-19
 - new variational inference algorithm based on direct KL minimisation: infKL
 - improved inf/infVB double loop scheme so that only very few likelihood properties are required; infVB is now internally a sequence of infLaplace runs
 - improved inf/infLaplace to be more generic so that optimisers other than scaled Newton can be used
@@ -312,21 +290,20 @@ NEW in version 3.3, 2013-10-19
 - new meta covariance function to turn a stationary covariance into a periodic covariance function covPERard, covPERiso
 - new periodic covariance function with zero DC component and correct scaling covPeriodicNoDC
 
-New likelihood functions in lik/:
-- likGamma.m, likBeta.m, likInvGauss.m
+New likelihood functions in lik/
+ - likGamma.m, likBeta.m, likInvGauss.m
 
-New inference functions in inf/:
-- infKL.m
+New inference functions in inf/
+ - infKL.m
 
-New covariance functions in cov/:
-- covSM.m, covGaboriso.m, covGaborard.m (contributed by Andrew Gordon Wilson)
-- covPPard.m, covMaternard.m, covLINiso.m
-- covCos.m, covPeriodicNoDC.m (contributed by James Robert Lloyd)
-- covPERiso.m, covPERard.m
+New covariance functions in cov/
+ - covSM.m, covGaboriso.m, covGaborard.m (contributed by Andrew Gordon Wilson)
+ - covPPard.m, covMaternard.m, covLINiso.m
+ - covCos.m, covPeriodicNoDC.m (contributed by James Robert Lloyd)
+ - covPERiso.m, covPERard.m
 
 
-NEW in version 3.2, 2013-01-15
-------------------------------
+### NEW in version 3.2, 2013-01-15
 - added inf/infFITC_Laplace.m and inf/infFITC_EP.m for large scale approximate inference
 - added inf/infMCMC.m to allow for Markov Chain Monte Carlo sampling and Annealed Importance Sampling; we currently support two samplers: Elliptical Slice Sampling (ESS) and Hybrid Monte Carlo (HMC)
 - improved accuracy of the digamma function lik/likT.m/dloggamma from three to ten digits precision (thanks to Edward Challis)
@@ -344,19 +321,17 @@ NEW in version 3.2, 2013-01-15
 - added likPoisson for Poisson regression of count data
 
 
-NEW in version 3.1, 2010-10-10
-------------------------------
+### NEW in version 3.1, 2010-10-10
 - following a suggestion by Ed Snelson we now support FITC regression
 - cov/covFITC.m and inf/infFITC.m have been added with Ed Snelson's help
 - the covariance interface was slightly changed to make that possible
 - changed parametrisation in cov/covPeriodic.m (thanks to Philipp Hennig)
 
 
-NEW in version 3.0, 2010-07-23
-------------------------------
+### NEW in version 3.0, 2010-07-23
 A major code reorganisation effort did take place in the current release. First,
-classification and regression are now done by a single file gp.m which is 
-completely generic in the likelihood. The previous regression program gpr.m 
+classification and regression are now done by a single file gp.m which is
+completely generic in the likelihood. The previous regression program gpr.m
 corresponds to gp.m with Gaussian likelihood. Several other likelihoods for
 robust regresssion were added.
 Further, the code now supports mean functions with a similar specification
@@ -365,29 +340,28 @@ correspond to using meanZero.m.
 We merged the covariance functions covMatern3iso.m and covMatern5.iso into a
 single covMaterniso.m and added a covariance function for additive functions as
 well as the possibility to use only certain components of the data. Finally, we
-included covPPiso.m a piecewise polynomial covariance function with compact 
+included covPPiso.m a piecewise polynomial covariance function with compact
 support.
 
-New likelihood functions in lik/:
-likGauss.m, likLaplace.m, likLogistic.m and likT.m
+New likelihood functions in lik/
+ - likGauss.m, likLaplace.m, likLogistic.m and likT.m
 
-New mean functions in mean/:
-meanConst.m, meanLinear.m, meanPow.m, meanProd.m, meanSum.m and meanZero.m
+New mean functions in mean/
+ - meanConst.m, meanLinear.m, meanPow.m, meanProd.m, meanSum.m and meanZero.m
 
-New covariance functions in cov/:
-covADD.m, covMask.m, covPPiso.m
+New covariance functions in cov/
+ - covADD.m, covMask.m, covPPiso.m
 
 The gprSRPP.m function which previously provided "Subset of Regressors" and the
 "Projected Process" approximation has now been removed.
 
 
-NEW in version 2.1, 2007-07-25
-------------------------------
+### NEW in version 2.1, 2007-07-25
 covConst.m: fixed a bug which caused an error in the derivative of the log marginal
     likelihood for certain combinations of covariance functions and approximation
     methods. (Thanks to Antonio Eleuteri for reporting the problem)
 
-gauher.m: added the function "gauher.m" which was mistakenly missing from the 
+gauher.m: added the function "gauher.m" which was mistakenly missing from the
     previous release. This caused an error for certain combinations of
     approximation method and likelihood function.
 
@@ -396,8 +370,7 @@ logistic.m: modified the approximation of moments calculation to use a mixture
     turns out to be more accurate.
 
 
-NEW in version 2.0, 2007-06-25
-------------------------------
+### NEW in version 2.0, 2007-06-25
 Some code restructuring has taken place for the classification code to make it
 more modular, to facilitate addition of new likelihood functions and
 approximations methods. Now, all classification is done using the binaryGP
@@ -410,8 +383,8 @@ logistic likelihood function (implemented using Gauss-Hermite quadrature).
 approxEP.m: New file, containing the Expectation Propagation approximation
     method, which was previously contained in binaryEPGP.m
 
-approxLA.m: New file, containing Laplaces approximation method, which was 
-    previously contained in binaryLaplace.m 
+approxLA.m: New file, containing Laplaces approximation method, which was
+    previously contained in binaryLaplace.m
 
 approximations.m: New file, help for the approximation methods.
 
@@ -435,8 +408,7 @@ likelihoods.m: New file, help for likelihood functions
 logistic.m: New file, logistic likelihood
 
 
-NEW in version 1.3, 2006-09-08
-------------------------------
+### NEW in version 1.3, 2006-09-08
 covRQard.m: bugfix: replaced x with x' and z with z' in line 36
 
 covRQiso.m: bugfix: replaced x with x' and z with z' in line 28
@@ -449,20 +421,16 @@ binaryEPGP.m: added the line "lml = -n*log(2);" in line 77. This change
          when the covariance matrix is exceptionally badly conditioned.
 
 
-NEW in version 1.2, 2006-05-10
-------------------------------
+### NEW in version 1.2, 2006-05-10
 added the "erfint" function to "binaryLaplaceGP.m". The erfint function
 was missing by mistake, preventing the use of the "logistic" likelihood.
 
 
-NEW in version 1.1, 2006-04-12
-------------------------------
+### NEW in version 1.1, 2006-04-12
 added files: "covProd.m" and "covPeriodic.m"
 
 changes: "covSEiso.m" was changed slightly to avoid the use of persistent
          variables
 
-
-NEW in version 1.0, 2006-03-29
-------------------------------
+### NEW in version 1.0, 2006-03-29
 initial version shipped with the book

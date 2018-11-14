@@ -1,4 +1,4 @@
-function [K,dK] = covMask(cov, hyp, x, z)
+function [K,dK] = covMask(mask, cov, hyp, x, z)
 
 % Apply a covariance function to a subset of the dimensions only. The subset can
 % either be specified by a 0/1 mask by a boolean mask or by an index set.
@@ -11,24 +11,31 @@ function [K,dK] = covMask(cov, hyp, x, z)
 % Example:
 %   k0  = {@covSEiso};
 %   msk = [1,3,7];
-%   k = {@covMask,{msk,k0{:}}};
+%   k = {@covMask,msk,k0{:}};
 %
 % The function was suggested by Iain Murray, 2010-02-18 and is based on an
 % earlier implementation of his dating back to 2009-06-16.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-11-14.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-11-14.
 %
 % See also COVFUNCTIONS.M.
 
-mask = fix(cov{1}(:));                    % either a binary mask or an index set
-cov = cov(2);                                 % covariance function to be masked
-if iscell(cov{:}), cov = cov{:}; end        % properly unwrap nested cell arrays
+narg = nargin;    % make a copy to become independent of actual number of params
+if iscell(mask) && numel(mask)==2  % => [K,dK] = covMask({mask, cov}, hyp, x, z)
+  if narg>3, z = x; end                                  % shift parameters by 1
+  if narg>2, x = hyp; end
+  if narg>1, hyp = cov; end
+  narg = narg+1;
+  cov = mask{2}; mask = mask{1};           % split {mask, cov} into constituents
+end
+
+if ~iscell(cov), cov = {cov}; end                % properly wrap into cell array
 nh_string = feval(cov{:});    % number of hyperparameters of the full covariance
 
 if max(mask)<2 && length(mask)>1, mask = find(mask); end    % convert 1/0->index
 D = length(mask);                                             % masked dimension
-if nargin<3, K = num2str(eval(nh_string)); return, end    % number of parameters
-if nargin<4, z = []; end                                   % make sure, z exists
+if narg<4, K = num2str(eval(nh_string)); return, end      % number of parameters
+if narg<5, z = []; end                                     % make sure, z exists
 xeqz = isempty(z); dg = strcmp(z,'diag');                       % determine mode
 
 if eval(nh_string)~=length(hyp)                          % check hyperparameters

@@ -2,7 +2,7 @@
 %
 % See also covFunctions.m.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-11-14.
 %                                      File automatically generated using noweb.
 clear all, close all
 n = 5; D = 3; x = randn(n,D); xs = randn(3,D);  % create a data set
@@ -39,11 +39,11 @@ hypds = L(triu(true(s))); xd = randi([1,s],[n,1]); xsd = [1;3;6];
 cfa = {@covSEfact,2}; hypfa = randn(D*2,1);       % factor analysis
 
 % set up composite i.e. meta covariance functions
-csc = {'covScale',{cgu}};    hypsc = [log(3); hypgu];  % scale by 9
+csc = {'covScale',cgu};      hypsc = [log(3); hypgu];  % scale by 9
 csu = {'covSum',{cn,cc,cl}}; hypsu = [hypn; hypc; hypl];      % sum
 cpr = {@covProd,{cc,cci}};   hyppr = [hypc; hypcc];       % product
 mask = [0,1,0]; %   binary mask excluding all but the 2nd component
-cma = {'covMask',{mask,cgi{:}}}; hypma = hypgi;
+cma = {'covMask',mask,cgi{:}}; hypma = hypgi;
 % isotropic periodic rational quadratic
 cpi = {'covPERiso',{@covRQiso}};
 % periodic Matern with ARD

@@ -146,7 +146,7 @@
 %        cov = {'covScale', {'covRQiso'}};
 %        cov = {'covSum', {'covRQiso','covSEard','covNoise'}};
 %        cov = {'covProd',{'covRQiso','covSEard','covNoise'}};
-%        cov = {'covMask',{mask,'covSEiso'}}
+%        cov = {'covMask',mask,'covSEiso'}
 %   q=1; cov = {'covPPiso',q};
 %   d=3; cov = {'covPoly',d};
 %        cov = {'covADD',{[1,2],'covSEiso'}};
@@ -162,5 +162,5 @@
 %
 % See also doc/usageCov.m.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-11-14.
 %                                      File automatically generated using noweb.
