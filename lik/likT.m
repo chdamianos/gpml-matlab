@@ -1,15 +1,34 @@
 function [varargout] = likT(hyp, y, mu, s2, inf, i)
-
-% likT - Student's t likelihood function for regression. 
+% Student's t likelihood function for regression.
+%
+% Report number of hyperparameters
+%  S = LIKT ()
+%  S = LIKT (HYP)
+%
+% Prediction mode
+%   LP            = LIKT (HYP, Y, MU)
+%  [LP, YMU, YS2] = LIKT (HYP, Y, MU, S2)
+%
+% Inference mode
+%  [VARARGOUT] = LIKT (HYP, Y, MU, S2, INF)
+%  [VARARGOUT] = LIKT (HYP, Y, MU, S2, INF, I)
+%
+% Call LIKFUNCTIONS to get an explanation of outputs in each mode.
+%
 % The expression for the likelihood is
-%   likT(t) = Z * ( 1 + (t-y)^2/(nu*sn^2) ).^(-(nu+1)/2),
-% where Z = gamma((nu+1)/2) / (gamma(nu/2)*sqrt(nu*pi)*sn)
+%
+%  likT(t) = Z * ( 1 + (t-y)^2 / (nu * sn^2) ).^(-(nu + 1) / 2),
+%
+% where 
+%
+% Z = gamma((nu + 1) / 2) / (gamma(nu / 2) * sqrt(nu * pi) * sn)
+%
 % and y is the mean (for nu>1) and nu*sn^2/(nu-2) is the variance (for nu>2).
 %
 % The hyperparameters are:
 %
-% hyp = [ log(nu-1)
-%         log(sn)  ]
+%  hyp = [ log(nu-1)
+%          log(sn)  ]
 %
 % Note that the parametrisation guarantees nu>1, thus the mean always exists.
 %
@@ -17,9 +36,9 @@ function [varargout] = likT(hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
+% See also LIKFUNCTIONS.M
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-10-01.
-%
-% See also LIKFUNCTIONS.M.
 
 if nargin<3, varargout = {'2'}; return; end   % report number of hyperparameters
 if ~exist('psi'), mypsi = @digamma; else mypsi = @psi; end    % no psi in Octave

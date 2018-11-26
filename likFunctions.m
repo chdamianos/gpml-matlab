@@ -1,3 +1,4 @@
+function likFunctions ()
 % likelihood functions are provided to be used by the gp.m function:
 %
 %   likErf         (Error function, classification, probit regression)
@@ -99,6 +100,8 @@
 %
 % See the help for the individual likelihood for the computations specific to
 % each likelihood function.
-%
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
-%                                      File automatically generated using noweb.
+help likFunctions
+return
+

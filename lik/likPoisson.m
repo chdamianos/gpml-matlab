@@ -1,18 +1,48 @@
 function [varargout] = likPoisson(link, hyp, y, mu, s2, inf, i)
-
-% likPoisson - Poisson likelihood function for count data y. The expression for
-% the likelihood is 
-%   likPoisson(f) = mu^y * exp(-mu) / y! with mean=variance=mu
-% where mu = g(f) is the Poisson intensity, f is a
-% Gaussian process, y is the non-negative integer count data and 
-% y! = gamma(y+1) its factorial. Hence, we have -- with Zy = gamma(y+1) = y! --
-%   llik(f) = log(likPoisson(f)) = log(g(f))*y - g(f) - log(Zy).
+% Poisson likelihood function for count data Y.
+%
+% Report number of hyperparameters
+%  S = LIKPOISSON ()
+%  S = LIKPOISSON (LINK)
+%
+% Prediction mode
+%   LP            = LIKPOISSON (LINK, HYP, Y, MU)
+%  [LP, YMU, YS2] = LIKPOISSON (LINK, HYP, Y, MU, S2)
+%
+% Inference mode
+%  [VARARGOUT] = LIKPOISSON (LINK, HYP, Y, MU, S2, INF)
+%  [VARARGOUT] = LIKPOISSON (LINK, HYP, Y, MU, S2, INF, I)
+%
+% Call LIKFUNCTIONS to get an explanation of outputs in each mode.
+%
+% The expression for the likelihood is
+%
+%  likPoisson(f) = mu^y * exp(-mu) / y!
+%
+% with mean = variance = mu, and where mu = g(f) is the Poisson intensity, 
+% f is a Gaussian process, y is the non-negative integer count data and 
+% y! = gamma(y+1) its factorial.
+% Hence, we have -- with Zy = gamma(y+1) = y! --
+%
+%  llik(f) = log(likPoisson(f)) = log(g(f)) * y - g(f) - log(Zy).
+%
 % The larger the intensity mu, the stronger the likelihood resembles a Gaussian
 % since skewness = 1/sqrt(mu) and kurtosis = 1/mu.
 %
-% We provide two inverse link functions 'exp' and 'logistic':
-% For g(f) = exp(f),         we have lik(f) = exp(f*y-exp(f))            / Zy.
-% For g(f) = log(1+exp(f))), we have lik(f) = log^y(1+exp(f)))(1+exp(f)) / Zy.
+% There are no hyperparameters:
+%
+%  hyp = [ ]
+%
+%
+% We provide two inverse LINK functions 'exp' and 'logistic':
+% For LINK = 'exp', i.e. g(f) = exp(f), we have 
+%
+%  lik(f) = exp(f * y - exp(f)) / Zy.
+%
+% For LINK = 'logistic', i.e. g(f) = log(1+exp(f))), we have 
+%
+%  lik(f) = log(1 + exp(f))^y(1 + exp(f))) / Zy.
+%
 % The link functions are located at util/glm_invlink_*.m.
 % 
 % Note that for both intensities g(f) the likelihood lik(f) is log concave.
@@ -22,7 +52,7 @@ function [varargout] = likPoisson(link, hyp, y, mu, s2, inf, i)
 % to avoid numerical issues when the arguments are extreme.
 %
 % See also LIKFUNCTIONS.M.
-%
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-10-04.
 
 if nargin<4, varargout = {'0'}; return; end   % report number of hyperparameters

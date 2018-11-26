@@ -1,22 +1,37 @@
 function [varargout] = likGauss(hyp, y, mu, s2, inf, i)
-
-% likGauss - Gaussian likelihood function for regression. The expression for the 
-% likelihood is 
-%   likGauss(t) = exp(-(t-y)^2/2*sn^2) / sqrt(2*pi*sn^2),
+% Gaussian likelihood function for regression.
+%
+% Report number of hyperparameters
+%  S = LIKGAUSS ()
+%  S = LIKGAUSS (HYP)
+%
+% Prediction mode
+%   LP            = LIKGAUSS (HYP, Y, MU)
+%  [LP, YMU, YS2] = LIKGAUSS (HYP, Y, MU, S2)
+%
+% Inference mode
+%  [VARARGOUT] = LIKGAUSS (HYP, Y, MU, S2, INF)
+%  [VARARGOUT] = LIKGAUSS (HYP, Y, MU, S2, INF, I)
+%
+% Call LIKFUNCTIONS to get an explanation of outputs in each mode.
+%
+% The expression for the likelihood is 
+%
+%  likGauss(t) = exp(-(t - y)^2 / 2 / sn^2) / sqrt(2 * pi * sn^2),
+%
 % where y is the mean and sn is the standard deviation.
 %
 % The hyperparameters are:
 %
-% hyp = [  log(sn)  ]
+%  hyp = [  log(sn)  ]
 %
 % Several modes are provided, for computing likelihoods, derivatives and moments
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
-%                                      File automatically generated using noweb.
-%
 % See also LIKFUNCTIONS.M.
+
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
 
 if nargin<3, varargout = {'1'}; return; end   % report number of hyperparameters
 

@@ -1,21 +1,37 @@
 function [varargout] = likLaplace(hyp, y, mu, s2, inf, i)
-
-% likLaplace - Laplacian likelihood function for regression. 
+% Laplacian likelihood function for regression.
+%
+% Report number of hyperparameters
+%  S = LIKLAPLACE ()
+%  S = LIKLAPLACE (HYP)
+%
+% Prediction mode
+%   LP            = LIKLAPLACE (HYP, Y, MU)
+%  [LP, YMU, YS2] = LIKLAPLACE (HYP, Y, MU, S2)
+%
+% Inference mode
+%  [VARARGOUT] = LIKLAPLACE (HYP, Y, MU, S2, INF)
+%  [VARARGOUT] = LIKLAPLACE (HYP, Y, MU, S2, INF, I)
+%
+% Call LIKFUNCTIONS to get an explanation of outputs in each mode.
+%
 % The expression for the likelihood is 
-%   likLaplace(t) = exp(-|t-y|/b)/(2*b) with b = sn/sqrt(2),
-% where y is the mean and sn^2 is the variance.
+%
+%  likLaplace(t) = exp(-|t - y| / b) /(2 * b),
+%
+% with b = sn / sqrt(2), and where y is the mean and sn^2 is the variance.
 %
 % The hyperparameters are:
 %
-% hyp = [  log(sn)  ]
+%  hyp = [  log(sn)  ]
 %
 % Several modes are provided, for computing likelihoods, derivatives and moments
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme. 
 %
-% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2013-10-16.
-%
 % See also LIKFUNCTIONS.M.
+
+% Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2013-10-16.
 
 if nargin<3, varargout = {'1'}; return; end   % report number of hyperparameters
 
