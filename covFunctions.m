@@ -1,3 +1,4 @@
+function covFunctions ()
 % Covariance functions to be use by Gaussian process functions. There are two
 % different kinds of covariance functions: simple and composite:
 %
@@ -160,7 +161,10 @@
 % which returns the string '3+(D+1)+1' (i.e. the 'covRQiso' contribution uses
 % 3 parameters, the 'covSEard' uses D+1 and 'covNoise' a single parameter).
 %
-% See also doc/usageCov.m.
-%
+% See also USAGECOV
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-11-14.
-%                                      File automatically generated using noweb.
+
+help covFunctions
+return
+

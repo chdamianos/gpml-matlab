@@ -100,8 +100,11 @@ function likFunctions ()
 %
 % See the help for the individual likelihood for the computations specific to
 % each likelihood function.
+%
+% See also USAGELIK
 
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
+
 help likFunctions
 return
 

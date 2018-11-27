@@ -1,3 +1,4 @@
+function infMethods ()
 % Inference methods: Compute the (approximate) posterior for a Gaussian process.
 % Methods currently implemented include:
 %
@@ -46,7 +47,12 @@
 % N(mu=m+K*alpha, V=inv(inv(K)+W)), where alpha is a vector and W is diagonal.
 %
 % For more information on the individual approximation methods and their
-% implementations, see the separate inf??.m files. See also gp.m.
+% implementations, see the separate inf??.m files.
 %
+% See also GP
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
-%                                      File automatically generated using noweb.
+
+help infMethods
+return
+

@@ -1,3 +1,4 @@
+function meanFunctions ()
 % Mean functions to be use by Gaussian process functions. There are two
 % different kinds of mean functions: simple and composite:
 %
@@ -55,7 +56,10 @@
 % the same size as the hyperparameter vector hyp. The components of dhyp are
 % defined as follows: dhyp(i) = q'*( d m(x) / d hyp(i) ).
 %
-% See also doc/usageMean.m.
-%
+% See also USAGEMEAN
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
-%                                      File automatically generated using noweb.
+
+help meanFunctions
+return
+

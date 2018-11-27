@@ -1,3 +1,4 @@
+function priorDistributions ()
 % prior distributions to be used for hyperparameters of Gaussian processes
 % using infPrior.
 % There are two different kinds of prior distributions: simple and composite:
@@ -51,7 +52,9 @@
 % The function returns the log density at location t along with its first
 % derivative.
 %
-% See also doc/usagePrior.m, inf/infPrior.m.
-%
+% See also INFPRIOR, USAGEPRIOR
+
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
-%                                      File automatically generated using noweb.
+
+help priorDistributions
+return
