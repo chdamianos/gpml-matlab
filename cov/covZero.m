@@ -11,7 +11,7 @@ function [K,dK] = covZero(hyp, x, z)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-17.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin<2, K = '0'; return; end                  % report number of parameters
 if nargin<3, z = []; end                                   % make sure, z exists

@@ -9,7 +9,7 @@
 % For details, see The Generalized FITC Approximation, Andrew Naish-Guzman and
 %                  Sean Holden, NIPS, 2007.
 %
-% See also INFMETHODS.M, APXSPARSE.M, APX.M.
+% See also INFMETHODS, APXSPARSE, APX
 %
 % Copyright (c) by Hannes Nickisch, 2016-10-13.
 

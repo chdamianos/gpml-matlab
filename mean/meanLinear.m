@@ -13,7 +13,7 @@ function [m,dm] = meanLinear(hyp, x)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-15.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 if nargin<2, m = 'D'; return; end             % report number of hyperparameters
 [n,D] = size(x);

@@ -19,7 +19,7 @@ function [post nlZ dnlZ] = infKL(hyp, mean, cov, lik, x, y, opt)
 % Copyright (c) by Emtiyaz Khan (RIKEN) and Wu Lin (RIKEN) 2017-08-18
 %                     with some changes by Hannes Nickisch 2017-10-22.
 %
-% See also INFMETHODS.M, APX.M, GP.M.
+% See also INFMETHODS, APX, GP
 
 c1 = cov{1}; if isa(c1, 'function_handle'), c1 = func2str(c1); end
 spars = strcmp(c1,'apxSparse') || strcmp(c1,'covFITC');

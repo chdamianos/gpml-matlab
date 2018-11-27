@@ -47,7 +47,7 @@ function [post nlZ dnlZ] = infMCMC(hyp, mean, cov, lik, x, y, par)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2016-05-09.
 %
-% See also INFMETHODS.M.
+% See also INFMETHODS
 
 if nargin<7, par = []; end                         % analyse parameter structure
 if isfield(par,'sampler'), alg=par.sampler; else alg='hmc';   end

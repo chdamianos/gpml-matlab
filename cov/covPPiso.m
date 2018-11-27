@@ -16,7 +16,7 @@ function varargout = covPPiso(v,varargin)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-27.
 %
-% See also covPP.M.
+% See also covPP
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covScale({'covPP','iso',[],v},varargin{:});

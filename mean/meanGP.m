@@ -11,7 +11,7 @@ function [m,dm] = meanGP(hyp,inf,mean,cov,lik,x,y, hypz,z)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-16.
 %
-% See also MEANFUNCTIONS.M and MEANGPEXACT.M.
+% See also MEANFUNCTIONS and MEANGPEXACT
 
 if nargin<7, error('GP must be specified.'), end           % check for dimension
 if nargin<9, m = '0'; return, end             % report number of hyperparameters

@@ -43,7 +43,7 @@ function [post nlZ dnlZ] = infPrior(inf, prior, hyp, varargin)
 %
 % Copyright (c) by Hannes Nickisch and Roman Garnett, 2016-10-26.
 %
-% See also INFMETHODS.M, USAGEPRIOR.M, PRIORDISTRIBUTIONS.M.
+% See also INFMETHODS, USAGEPRIOR, PRIORDISTRIBUTIONS
 
 [post nlZ dnlZ] = inf(hyp, varargin{:});                     % perform inference
 if ~isempty(prior)                % add hyperprior contributions to nlZ and dnlZ

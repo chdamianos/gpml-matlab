@@ -17,7 +17,7 @@ function varargout = covSEiso(varargin)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-27.
 %
-% See also covSE.M.
+% See also covSE
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covScale({'covSE','iso',[]},varargin{:});

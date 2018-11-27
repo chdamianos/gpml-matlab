@@ -13,7 +13,7 @@ function [m,dm] = meanWarp(mean, g, dg, hyp, x)
 %
 % Copyright (c) by William Herlands & Hannes Nickisch, 2016-04-15.
 %
-% See also MEANFUNCTIONS.M
+% See also MEANFUNCTIONS
 
 if nargin<5, m = feval(mean{:}); return, end       % report number of parameters
 

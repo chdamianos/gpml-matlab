@@ -8,7 +8,7 @@ function [m,dm] = meanSum(mean, hyp, x)
 %
 % Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2016-04-15.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 nm = numel(mean);
 for ii = 1:nm                                      % iterate over mean functions

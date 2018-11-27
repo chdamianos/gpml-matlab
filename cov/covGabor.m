@@ -22,7 +22,7 @@ function [K,dK] = covGabor(mode, hyp, x, z)
 %
 % Copyright (c) by Hannes Nickisch, 2016-05-03.
 %
-% See also COVFUNCTIONS.M, COVGABORARD.M, COVSM.M.
+% See also COVFUNCTIONS, COVGABORARD, COVSM
 
 if nargin<1, error('We require a mode.'), end
 if     isequal(mode,'ard'), np = 'D';

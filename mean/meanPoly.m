@@ -22,7 +22,7 @@ function [m,dm] = meanPoly(d, hyp, x)
 %
 % Copyright (c) by Hannes Nickisch 2016-04-15.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 d = max(abs(floor(d)),1);                              % positive integer degree
 if nargin<3, m = ['D*',int2str(d)]; return; end   % report number of hyperparams 

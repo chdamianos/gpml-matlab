@@ -10,7 +10,7 @@ function [post nlZ dnlZ] = infGaussLik(hyp, mean, cov, lik, x, y, opt)
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-08-01.
 %                                      File automatically generated using noweb.
 %
-% See also INFMETHODS.M, APX.M.
+% See also INFMETHODS, APX
 
 if nargin<7, opt = []; end                          % make sure parameter exists
 if iscell(lik), likstr = lik{1}; else likstr = lik; end

@@ -18,7 +18,7 @@ function [post, nlZ, dnlZ] = infVB(hyp, mean, cov, lik, x, y, opt)
 %
 % Copyright (c) by Hannes Nickisch 2016-10-21.
 %
-% See also INFMETHODS.M, GP.M.
+% See also INFMETHODS, GP
 
 n = size(x,1);
 if nargin<=6, opt = []; end                        % make opt variable available

@@ -11,7 +11,7 @@ function [K,dK] = covSum(cov, hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2016-04-18.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if isempty(cov), error('We require at least one summand.'), end
 if isnumeric(cov{end}) || islogical(cov{end})          % detect whether to cache

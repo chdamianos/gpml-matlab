@@ -46,7 +46,7 @@ function K = apxSparse(cov, xu, hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-12-13.
 %
-% See also COVFUNCTIONS.M, APX.M, INFLAPLACE.M, INFGAUSSLIK.M.
+% See also COVFUNCTIONS, APX, INFLAPLACE, INFGAUSSLIK
 
 if nargin<4, K = feval(cov{:}); return, end
 

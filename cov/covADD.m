@@ -26,7 +26,7 @@ function [K,dK] = covADD(cov, hyp, x, z)
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2017-02-21.
 %                  multiple covariance support contributed by Truong X. Nghiem
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 R = fix(cov{1});                            % only positive integers are allowed
 if min(R)<1, error('only positive R up to D allowed'), end

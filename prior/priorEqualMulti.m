@@ -10,6 +10,6 @@ function [lp,dlp] = priorEqualMulti(x)
 %
 % Copyright (c) by Hannes Nickisch, 2016-10-26.
 %
-% See also PRIORDISTRIBUTIONS.M.
+% See also PRIORDISTRIBUTIONS
 
 error('The function is not intended to be called directly.')

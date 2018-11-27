@@ -25,7 +25,7 @@ function varargout = covGaborard(varargin)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-25.
 %
-% See also COVFUNCTIONS.M, COVGABOR.M, COVSM.M.
+% See also COVFUNCTIONS, COVGABOR, COVSM
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covGabor('ard',varargin{:});

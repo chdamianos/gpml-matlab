@@ -20,7 +20,7 @@ function [K,dK] = covPER(mode, cov, hyp, x, z)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-25.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin<2, error('We require a mode and a base covariance k0.'), end
 if     isequal(mode,'ard'), ne = 'D';

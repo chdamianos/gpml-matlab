@@ -18,7 +18,7 @@ function [K,dK] = covMask(mask, cov, hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2018-11-14.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 narg = nargin;    % make a copy to become independent of actual number of params
 if iscell(mask) && numel(mask)==2  % => [K,dK] = covMask({mask, cov}, hyp, x, z)

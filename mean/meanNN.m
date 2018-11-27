@@ -11,7 +11,7 @@ function [m,dm] = meanNN(c,v, hyp, x)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-16.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 if nargin<4, m = '0'; return; end             % report number of hyperparameters 
 if numel(hyp)~=0, error('No hyperparameters needed for this model.'), end

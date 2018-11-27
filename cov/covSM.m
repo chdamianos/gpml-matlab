@@ -51,7 +51,7 @@ function [K,dK] = covSM(Q, hyp, x, z)
 %
 % Copyright (c) by Andrew Gordon Wilson and Hannes Nickisch, 2016-05-06.
 %
-% See also COVFUNCTIONS.M, COVGABORISO.M, COVGABORARD.M.
+% See also COVFUNCTIONS, COVGABORISO, COVGABORARD
 
 if nargin<1, error('You need to provide Q.'), end
 smp = Q<0; Q = abs(Q);                    % switch between covSM and covSMP mode

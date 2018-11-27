@@ -21,7 +21,7 @@ function varargout = covSEproj(d,varargin)
 %
 % Copyright (c) by Roman Garnett & Hannes Nickisch, 2016-04-27.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covScale({'covSE','proj',d},varargin{:});

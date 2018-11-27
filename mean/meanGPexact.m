@@ -18,7 +18,7 @@ function [m,dm] = meanGPexact(mean,cov,x,y, hypz,z)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-16.
 %
-% See also MEANFUNCTIONS.M and MEANGP.M.
+% See also MEANFUNCTIONS and MEANGP
 
 if nargin<4, error('GP must be specified.'), end           % check for dimension
 if isempty(mean), mean = @meanZero; end              % set default and make cell

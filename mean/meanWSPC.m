@@ -13,7 +13,7 @@ function [m,dm] = meanWSPC(d, hyp, x)
 %
 % Copyright (c) by William Herlands and Hannes Nickisch, 2016-04-15.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 if nargin<3, m = sprintf('(D+2)*%d',d); return; end    % report number of hypers
 [n,D] = size(x);

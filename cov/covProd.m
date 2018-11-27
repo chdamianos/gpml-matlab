@@ -11,7 +11,7 @@ function [K,dK] = covProd(cov, hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-18.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if isempty(cov), error('We require at least one factor.'), end
 if isnumeric(cov{end}) || islogical(cov{end})          % detect whether to cache

@@ -16,7 +16,7 @@ function [K,dK] = covPeriodicNoDC(hyp, x, z)
 %
 % Copyright (c) by James Robert Lloyd and Hannes Nickisch 2016-04-24.
 %
-% See also COVFUNCTIONS.M, COVCOS.M.
+% See also COVFUNCTIONS, COVCOS
 
 if nargin<2, K = '3'; return; end                  % report number of parameters
 if nargin<3, z = []; end                                   % make sure, z exists

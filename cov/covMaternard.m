@@ -22,7 +22,7 @@ function varargout = covMaternard(d,varargin)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-17.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covScale({'covMatern','ard',[],d},varargin{:});

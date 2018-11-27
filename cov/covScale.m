@@ -24,7 +24,7 @@ function [K,dK] = covScale(cov, lsf, hyp, x, z)
 % Copyright (c) by Carl Edward Rasmussen, Hannes Nickisch & Roman Garnett
 %                                                                    2016-04-26.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin==0, error('cov function must be specified'), end
 if nargin<=1, lsf = []; end, narg = nargin;                % set a default value

@@ -9,7 +9,7 @@ function [post nlZ dnlZ alpha] = infLaplace(hyp, mean, cov, lik, x, y, opt)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2016-10-21.
 %
-% See also INFMETHODS.M, GP.M.
+% See also INFMETHODS, GP
 
 persistent last_alpha                                   % copy of the last alpha
 if any(isnan(last_alpha)), last_alpha = zeros(size(last_alpha)); end   % prevent

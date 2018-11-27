@@ -10,7 +10,7 @@ function [m,dm] = meanConst(hyp, x)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-15.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 if nargin<2, m = '1'; return; end             % report number of hyperparameters 
 if numel(hyp)~=1, error('Exactly one hyperparameter needed.'), end

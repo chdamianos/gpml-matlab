@@ -13,7 +13,7 @@ function [K,dK] = covRQ(mode, par, hyp, varargin)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-05-23.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin < 1, error('Mode cannot be empty.'); end                  % no default
 if nargin < 2, par = []; end                                           % default

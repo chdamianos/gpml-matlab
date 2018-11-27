@@ -19,7 +19,7 @@ function [m,dm] = meanDiscrete(s, hyp, x)
 %
 % Copyright (c) by Roman Garnett and Hannes Nickisch, 2016-04-16.
 %
-% See also COVDISCRETE.M, MEANFUNCTIONS.M.
+% See also COVDISCRETE, MEANFUNCTIONS
 
 if nargin==0, error('s must be specified.'), end           % check for dimension
 if nargin<=2, m = num2str(s); return; end     % report number of hyperparameters

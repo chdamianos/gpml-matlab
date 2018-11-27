@@ -24,7 +24,7 @@ function [varargout] = likInvGauss(link, hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
-% See also LIKFUNCTIONS.M.
+% See also LIKFUNCTIONS
 %
 % Copyright (c) by Hannes Nickisch, 2016-10-04.
 

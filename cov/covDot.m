@@ -37,7 +37,7 @@ function [K,dK,S] = covDot(mode, par, k, dk, hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2017-09-26.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin<1, mode = 'eye'; end, if nargin <2, par = []; end     % default values
 mode_list = '''eye'', ''iso'', ''ard'', ''proj'', or ''fact''.';

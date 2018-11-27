@@ -153,7 +153,7 @@ function [K,Mx,xe] = apxGrid(cov, xg, hyp, x, z, b)
 % Copyright (c) by Hannes Nickisch, Kun Dong, Insu Han 
 %                                                  and Andrew Wilson 2018-03-26.
 %
-% See also COVFUNCTIONS.M, APX.M, INFLAPLACE.M, INFGAUSSLIK.M.
+% See also COVFUNCTIONS, APX, INFLAPLACE, INFGAUSSLIK
 
 if nargin<2, error('Not enough parameters provided.'), end
 dense_max = 0; % 500 if larger grid we use FFT-algebra rather than dense algebra

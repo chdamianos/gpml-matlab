@@ -17,7 +17,7 @@ function varargout = covMaterniso(d,varargin)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-27.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covScale({'covMatern','iso',[],d},varargin{:});

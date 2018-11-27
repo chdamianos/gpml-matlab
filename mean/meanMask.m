@@ -8,7 +8,7 @@ function [m,dm] = meanMask(mask, mean, hyp, x)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-16.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 nh_string = feval(mean{:});         % number of hyperparameters of the full mean
 

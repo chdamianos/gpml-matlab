@@ -14,7 +14,7 @@ function [m,dm] = meanScale(mean, hyp, x)
 %
 % Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2016-04-15.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 if nargin<3                                        % report number of parameters
   m = [feval(mean{:}),'+1']; return

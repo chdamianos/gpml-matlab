@@ -16,7 +16,7 @@ function [K,dK] = covWarp(cov, p, dp, Dp, hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-11-14.
 %
-% See also COVFUNCTIONS.M, COVMASK.M.
+% See also COVFUNCTIONS, COVMASK
 
 nh_string = feval(cov{:});    % number of hyperparameters of the full covariance
 D = Dp;                                                % make variable available

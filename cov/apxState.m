@@ -17,7 +17,7 @@ function varargout = apxState(cov,varargin)
 %
 % Copyright (c) by Hannes Nickisch, 2018-06-01.
 %
-% See also COVFUNCTIONS.M, APX.M, INFLAPLACE.M, INFGAUSSLIK.M.
+% See also COVFUNCTIONS, APX, INFLAPLACE, INFGAUSSLIK
 
 derivtest = false;
 

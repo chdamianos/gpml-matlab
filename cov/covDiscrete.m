@@ -36,7 +36,7 @@ function [K,dK] = covDiscrete(s, hyp, x, z)
 %
 % Copyright (c) by Roman Garnett, 2016-04-18.
 %
-% See also MEANDISCRETE.M, COVFUNCTIONS.M.
+% See also MEANDISCRETE, COVFUNCTIONS
 
 if nargin==0, error('s must be specified.'), end           % check for dimension
 if nargin<3, K = num2str(s*(s+1)/2); return; end   % report number of parameters

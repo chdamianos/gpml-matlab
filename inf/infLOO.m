@@ -15,7 +15,7 @@ function [post nloo dnloo loo] = infLOO(hyp, mean, cov, lik, x, y)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-05-02
 %
-% See also INFMETHODS.M.
+% See also INFMETHODS
 
 [n, D] = size(x);
 if isnumeric(cov),  K = cov;                    % use provided covariance matrix

@@ -15,7 +15,7 @@ function [m,dm] = meanPref(mean, hyp, x)
 %
 % Copyright (c) by Hannes Nickisch and Roman Garnett, 2016-04-16.
 %
-% See also MEANFUNCTIONS.M and COVPREF.M.
+% See also MEANFUNCTIONS and COVPREF
 
 if nargin<3, m = strrep(feval(mean{:}),'D','D/2'); return; end    % no of params
 

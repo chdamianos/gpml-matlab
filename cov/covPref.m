@@ -15,7 +15,7 @@ function [K,dK] = covPref(cov, hyp, x, z)
 %
 % Copyright (c) by Hannes Nickisch and Roman Garnett, 2016-04-17.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin<3, K = strrep(feval(cov{:}),'D','D/2'); return; end     % no of params
 if nargin<4, z = []; end                                   % make sure, z exists

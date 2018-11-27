@@ -13,7 +13,7 @@ function [K,dK] = covCos(hyp, x, z)
 %
 % Copyright (c) by James Robert Lloyd and Hannes Nickisch, 2016-11-05.
 %
-% See also COVFUNCTIONS.M, COVPERIODICNODC.M.
+% See also COVFUNCTIONS, COVPERIODICNODC
 
 if nargin<2, K = '2'; return; end                  % report number of parameters
 if nargin<3, z = []; end                                   % make sure, z exists

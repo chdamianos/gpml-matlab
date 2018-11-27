@@ -17,7 +17,7 @@ function [m,dm] = meanPow(d, mean, hyp, x)
 %
 % Copyright (c) by Carl Edward Rasmussen & Hannes Nickisch 2016-05-04.
 %
-% See also MEANFUNCTIONS.M.
+% See also MEANFUNCTIONS
 
 if nargin<4                                        % report number of parameters
   m = feval(mean{:}); return

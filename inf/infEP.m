@@ -26,7 +26,7 @@ function [post nlZ dnlZ] = infEP(hyp, mean, cov, lik, x, y, opt)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch 2017-10-18.
 %
-% See also INFMETHODS.M, APX.M, GP.M.
+% See also INFMETHODS, APX, GP
 
 persistent last_ttau last_tnu              % keep tilde parameters between calls
 tol = 1e-4; max_sweep = 10; min_sweep = 2;     % tolerance to stop EP iterations

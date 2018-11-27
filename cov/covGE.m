@@ -13,7 +13,7 @@ function [K,dK] = covGE(mode, par, hyp, varargin)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-27.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin<1, mode = 'eye'; end, if nargin <2, par = []; end     % default values
 if nargin<4, K = [covMaha(mode,par),'+1']; return, end

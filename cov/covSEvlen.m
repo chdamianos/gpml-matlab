@@ -29,7 +29,7 @@ function varargout = covSEvlen(llen,varargin)
 %
 % Copyright (c) by Hannes Nickisch, 2016-05-04.
 %
-% See also COVSEISO.M, COVFUNCTIONS.M.
+% See also COVSEISO, COVFUNCTIONS
 
 varargout = cell(max(1,nargout),1);
 [varargout{:}] = covScale({'covSE','vlen',llen},varargin{:});

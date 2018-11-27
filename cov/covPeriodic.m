@@ -13,7 +13,7 @@ function [K,dK] = covPeriodic(hyp, x, z)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-04-24.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 if nargin<2, K = '3'; return; end                  % report number of parameters
 if nargin<3, z = []; end                                   % make sure, z exists

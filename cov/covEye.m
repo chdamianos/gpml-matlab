@@ -17,7 +17,7 @@ function [K,dK] = covEye(hyp, x, z)
 %
 % Copyright (c) by Hannes Nickisch, 2016-04-18.
 %
-% See also COVFUNCTIONS.M.
+% See also COVFUNCTIONS
 
 tol = eps;   % threshold on the norm when two vectors are considered to be equal
 if nargin<2, K = '0'; return; end                  % report number of parameters

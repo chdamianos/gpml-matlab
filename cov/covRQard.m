@@ -20,7 +20,7 @@ function varargout = covRQard(varargin)
 %
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2016-10-01.
 %
-% See also covRQ.M.
+% See also covRQ
 
 varargout = cell(max(1,nargout),1);
 if nargin>0                                  % restore old hyper parameter order
