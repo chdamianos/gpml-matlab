@@ -13,7 +13,7 @@ function [varargout] = likPoisson(link, hyp, y, mu, s2, inf, i)
 %  [VARARGOUT] = LIKPOISSON (LINK, HYP, Y, MU, S2, INF)
 %  [VARARGOUT] = LIKPOISSON (LINK, HYP, Y, MU, S2, INF, I)
 %
-% Call LIKFUNCTIONS to get an explanation of outputs in each mode.
+% Call likFunctions to get an explanation of outputs in each mode.
 %
 % The expression for the likelihood is
 %
