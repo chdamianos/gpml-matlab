@@ -1,5 +1,5 @@
 function [varargout] = likLaplace(hyp, y, mu, s2, inf, i)
-% Laplacian likelihood function for regression.
+% LIKLAPLACE Laplacian likelihood function for regression.
 %
 % Report number of hyperparameters
 %  S = LIKLAPLACE ()
@@ -29,7 +29,7 @@ function [varargout] = likLaplace(hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme. 
 %
-% See also LIKFUNCTIONS.M.
+% See also LIKFUNCTIONS
 
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2013-10-16.
 

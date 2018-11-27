@@ -1,5 +1,5 @@
 function [varargout] = likErf(hyp, y, mu, s2, inf, i)
-% Error function or cumulative Gaussian likelihood function for binary
+% LIKERF Error function or cumulative Gaussian likelihood function for binary
 % classification or probit regression.
 %
 % Report number of hyperparameters
@@ -28,7 +28,7 @@ function [varargout] = likErf(hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 % 
-% See also LIKFUNCTIONS.M.
+% See also LIKFUNCTIONS
 
 % Copyright (c) by Carl Edward Rasmussen and Hannes Nickisch, 2014-03-19.
 

@@ -1,5 +1,5 @@
 function [varargout] = likUni(hyp, y, mu, s2, inf, i)
-% Uniform likelihood function for classification.
+% LIKUNI Uniform likelihood function for classification.
 %
 % Report number of hyperparameters
 %  S = LIKUNI ()
@@ -13,7 +13,7 @@ function [varargout] = likUni(hyp, y, mu, s2, inf, i)
 %  [VARARGOUT] = LIKUNI (HYP, Y, MU, S2, INF)
 %  [VARARGOUT] = LIKUNI (HYP, Y, MU, S2, INF, I)
 %
-% Call LIKFUNCTIONS to get an explanation of outputs in each mode.
+% Call likFunctions to get an explanation of outputs in each mode.
 %
 % The expression for the likelihood is 
 %
@@ -27,7 +27,7 @@ function [varargout] = likUni(hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
-% See also LIKFUNCTIONS.M.
+% See also LIKFUNCTIONS
 
 % Copyright (c) by Hannes Nickisch, 2013-09-02.
 

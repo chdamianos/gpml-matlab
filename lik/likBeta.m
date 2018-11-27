@@ -1,5 +1,5 @@
 function [varargout] = likBeta(link, hyp, y, mu, s2, inf, i)
-% Beta likelihood function for interval data Y from [0,1].
+% LIKBETA Beta likelihood function for interval data Y from [0,1].
 %
 % Report number of hyperparameters
 %  S = LIKBETA ()
@@ -45,7 +45,7 @@ function [varargout] = likBeta(link, hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
-% See also LIKFUNCTIONS.M.
+% See also LIKFUNCTIONS
 
 % Copyright (c) by Hannes Nickisch, 2014-03-04.
 

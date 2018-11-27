@@ -1,5 +1,5 @@
 function [varargout] = likExp(link, hyp, varargin)
-% Exponential likelihood function for strictly positive data Y.
+% LIKEXP Exponential likelihood function for strictly positive data Y.
 %
 % Report number of hyperparameters
 %  S = LIKEXP ()
@@ -42,7 +42,7 @@ function [varargout] = likExp(link, hyp, varargin)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
-% See also LIKFUNCTIONS.M, LIKGAMMA.M.
+% See also LIKFUNCTIONS, LIKGAMMA
 
 % Copyright (c) by Hannes Nickisch, 2013-10-29.
 

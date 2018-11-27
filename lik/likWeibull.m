@@ -1,5 +1,5 @@
 function [varargout] = likWeibull(link, hyp, y, mu, s2, inf, i)
-% Weibull likelihood function for strictly positive data Y.
+% LIKWEIBULL Weibull likelihood function for strictly positive data Y.
 %
 % Report number of hyperparameters
 %  S = LIKWEIBULL ()
@@ -42,7 +42,7 @@ function [varargout] = likWeibull(link, hyp, y, mu, s2, inf, i)
 % respectively, see likFunctions.m for the details. In general, care is taken
 % to avoid numerical issues when the arguments are extreme.
 %
-% See also LIKFUNCTIONS.M.
+% See also LIKFUNCTIONS
 
 % Copyright (c) by Hannes Nickisch, 2016-10-04.
 
